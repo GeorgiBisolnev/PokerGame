@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Georgi\\source\\repos\\Poker\\Poker\\Poker.csproj": {}
+    "C:\\Users\\Georgi\\Documents\\GitHub\\PokerGame\\Poker\\Poker\\Poker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Georgi\\source\\repos\\Poker\\Poker\\Poker.csproj": {
+    "C:\\Users\\Georgi\\Documents\\GitHub\\PokerGame\\Poker\\Poker\\Poker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Georgi\\source\\repos\\Poker\\Poker\\Poker.csproj",
+        "projectUniqueName": "C:\\Users\\Georgi\\Documents\\GitHub\\PokerGame\\Poker\\Poker\\Poker.csproj",
         "projectName": "Poker",
-        "projectPath": "C:\\Users\\Georgi\\source\\repos\\Poker\\Poker\\Poker.csproj",
+        "projectPath": "C:\\Users\\Georgi\\Documents\\GitHub\\PokerGame\\Poker\\Poker\\Poker.csproj",
         "packagesPath": "C:\\Users\\Georgi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Georgi\\source\\repos\\Poker\\Poker\\obj\\",
+        "outputPath": "C:\\Users\\Georgi\\Documents\\GitHub\\PokerGame\\Poker\\Poker\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Georgi\\AppData\\Roaming\\NuGet\\NuGet.Config",
