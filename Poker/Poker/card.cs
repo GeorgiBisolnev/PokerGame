@@ -7,13 +7,13 @@ namespace Poker
     public enum Suite
     {
         Hearts,
-        Tiles,
-        Clovers,
-        Pikes
+        Diamonds,
+        Clubs,
+        Spides
     }
     public enum Value
     {
-        two, three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace
+        two=2, three, four, five, six, seven, eight, nine, ten, Jack, Queen, King, Ace
     }
     public class Card
     {
@@ -41,7 +41,71 @@ namespace Poker
 
         public override string ToString()
         {
-            return $"{CardValue} of {CardSuite}"; 
+            string value = "n/a";
+            switch (CardValue)
+            {
+                case Value.two:
+                    value = "2";
+                    break;
+                case Value.three:
+                    value = "3";
+                    break;
+                case Value.four:
+                    value = "4";
+                    break;
+                case Value.five:
+                    value = "5";
+                    break;
+                case Value.six:
+                    value = "6";
+                    break;
+                case Value.seven:
+                    value = "7";
+                    break;
+                case Value.eight:
+                    value = "8";
+                    break;
+                case Value.nine:
+                    value = "9";
+                    break;
+                case Value.ten:
+                    value = "10";
+                    break;
+                case Value.Jack:
+                    value = "J";
+                    break;
+                case Value.Queen:
+                    value = "Q";
+                    break;
+                case Value.King:
+                    value = "K";
+                    break;
+                case Value.Ace:
+                    value = "A";
+                    break;
+                default:
+                    break; 
+            }
+            string strSuite = "n/a";
+            switch (CardSuite)
+            {
+                case Suite.Hearts:
+                    strSuite = "\u2665";
+                    break;
+                case Suite.Diamonds:
+                    strSuite = "\u2666";
+                    break;
+                case Suite.Clubs:
+                    strSuite = "\u2663";
+                    break;
+                case Suite.Spides:
+                    strSuite = "\u2660";
+                    break;
+                default:
+                    break;
+            }
+            return $"({value}{strSuite})"; 
+
         }        
     }
 }
