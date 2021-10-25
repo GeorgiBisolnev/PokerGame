@@ -35,7 +35,7 @@ namespace Poker
 
                     Console.WriteLine(player1.printHand());
                     Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-                    Console.WriteLine(table.printHand()); 
+                    Console.WriteLine(table.printHand(false)); 
                     Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
                     Console.WriteLine(player2.printHand());
                 }
@@ -47,7 +47,7 @@ namespace Poker
 
                     Console.WriteLine(player1.printHand());
                     Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-                    Console.WriteLine(table.printHand());
+                    Console.WriteLine(table.printHand(false));
                     Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
                     Console.WriteLine(player2.printHand());
                 } else
@@ -58,7 +58,7 @@ namespace Poker
 
                     Console.WriteLine(player1.printHand());
                     Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-                    Console.WriteLine(table.printHand());
+                    Console.WriteLine(table.printHand(false));
                     Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
                     Console.WriteLine(player2.printHand());
                 }

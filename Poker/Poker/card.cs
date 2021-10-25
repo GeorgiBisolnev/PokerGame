@@ -29,9 +29,9 @@ namespace Poker
         {
             CardSuite = c;
         }
-        public Suite GetCardValue()
+        public Value GetCardValue()
         {
-            return CardSuite;
+            return CardValue;
         }
 
         public void SetCardValue(Value v)
