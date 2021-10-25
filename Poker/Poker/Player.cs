@@ -21,10 +21,13 @@ namespace Poker
             Hand.Add(c);
         }
 
-        public void printHand()
+        public string printHand()
         {
-            Console.WriteLine($"Player {Name}:");
-            Console.WriteLine(string.Join(" ",Hand));
+            var str = new StringBuilder();
+            str.AppendLine($"Player {Name}:");
+            str.AppendLine(string.Join(" ",Hand));
+            return str.ToString();
         }
+        public int GetNumberOfCards() => Hand.Count;
     }
 }

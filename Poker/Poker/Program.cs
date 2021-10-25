@@ -14,15 +14,50 @@ namespace Poker
 
             var player1 = new Player("Georgi");
             var player2 = new Player("Ivan");
+            var table = new Player("Table");
 
-            for (int i = 0; i < 5; i++)
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    player1.addCard(deck.NextCard());
+            //    player2.addCard(deck.NextCard());
+            //}
+            Console.WriteLine(player1.GetNumberOfCards());
+            while (player1.GetNumberOfCards() < 5)
             {
-                player1.addCard(deck.NextCard());
-                player2.addCard(deck.NextCard());
-            }
+                Console.WriteLine("-------------------");
+                if (player1.GetNumberOfCards()==0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        player1.addCard(deck.NextCard());                        
+                        player2.addCard(deck.NextCard());
+                        table.addCard(deck.NextCard());
+                    }
 
-            player1.printHand();
-            player2.printHand();
+                    Console.WriteLine(player1.printHand());
+                    Console.WriteLine(table.printHand());
+                    Console.WriteLine(player2.printHand());
+                }
+                else if (player1.GetNumberOfCards() == 3)
+                {
+                    player1.addCard(deck.NextCard()); 
+                    player2.addCard(deck.NextCard()); 
+                    table.addCard(deck.NextCard());
+
+                    Console.WriteLine(player1.printHand());
+                    Console.WriteLine(table.printHand());
+                    Console.WriteLine(player2.printHand());
+                } else
+                {
+                    player1.addCard(deck.NextCard());
+                    player2.addCard(deck.NextCard());
+                    table.addCard(deck.NextCard());
+
+                    Console.WriteLine(player1.printHand());
+                    Console.WriteLine(table.printHand());
+                    Console.WriteLine(player2.printHand());
+                }
+            }
         }
     }
 }

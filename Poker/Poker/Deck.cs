@@ -14,6 +14,7 @@ namespace Poker
         }
         public void NewDeck()
         {
+            deck.Clear();
             foreach (Suite suite in Enum.GetValues(typeof(Suite)))
             {
                 foreach (Value value in Enum.GetValues(typeof(Value)))
