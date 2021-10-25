@@ -69,7 +69,7 @@ namespace Poker
                     value = "9";
                     break;
                 case Value.ten:
-                    value = "10";
+                    value = "T";
                     break;
                 case Value.Jack:
                     value = "J";

@@ -20,8 +20,7 @@ namespace Poker
             //{
             //    player1.addCard(deck.NextCard());
             //    player2.addCard(deck.NextCard());
-            //}
-            Console.WriteLine(player1.GetNumberOfCards());
+            //};
             while (player1.GetNumberOfCards() < 5)
             {
                 Console.WriteLine("-------------------");
@@ -35,7 +34,9 @@ namespace Poker
                     }
 
                     Console.WriteLine(player1.printHand());
-                    Console.WriteLine(table.printHand());
+                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
+                    Console.WriteLine(table.printHand()); 
+                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
                     Console.WriteLine(player2.printHand());
                 }
                 else if (player1.GetNumberOfCards() == 3)
@@ -45,7 +46,9 @@ namespace Poker
                     table.addCard(deck.NextCard());
 
                     Console.WriteLine(player1.printHand());
+                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
                     Console.WriteLine(table.printHand());
+                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
                     Console.WriteLine(player2.printHand());
                 } else
                 {
@@ -54,9 +57,14 @@ namespace Poker
                     table.addCard(deck.NextCard());
 
                     Console.WriteLine(player1.printHand());
+                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
                     Console.WriteLine(table.printHand());
+                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
                     Console.WriteLine(player2.printHand());
                 }
+                Console.WriteLine("Pres any key to continue ...");
+                Console.ReadKey();
+                Console.Clear();
             }
         }
     }
