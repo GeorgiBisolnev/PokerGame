@@ -23,12 +23,12 @@ namespace Poker
                     currCard.SetCardValue(value);
                     currCard.SetCardSuite(suite);
 
-                    deck.Add(currCard);
+                    deck.Add(currCard); //добавяне на нова карта към тестето
                 }
             }
         }
 
-        public void ShufleDeck()
+        public void ShuffleDeck()
         {
             Random rnd = new Random();
             Card curCard = new Card();
@@ -37,8 +37,8 @@ namespace Poker
             {
                 int randomint = rnd.Next(deck.Count);
                 curCard = deck[randomint];
-                deck.RemoveAt(randomint);
-                deck.Add(curCard);
+                deck.RemoveAt(randomint);   // Изтриване на рандом карта от тестето
+                deck.Add(curCard);      //добавяне на изтритата карта в края на тестето
             }
 
         }
@@ -47,7 +47,7 @@ namespace Poker
         {
             foreach (var card in deck)
             {
-                Console.WriteLine(card.ToString());
+                Console.WriteLine(card.ToString() );
             }
         }
     }

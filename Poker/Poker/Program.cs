@@ -10,7 +10,7 @@ namespace Poker
 
             //deck.NewDeck();
 
-            deck.ShufleDeck();
+            deck.ShuffleDeck();
             deck.PrintDeck();
 
         }

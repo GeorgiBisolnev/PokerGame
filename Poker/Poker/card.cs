@@ -13,7 +13,7 @@ namespace Poker
     }
     public enum Value
     {
-        two2, three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace
+        two, three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace
     }
     public class Card
     {
@@ -41,7 +41,7 @@ namespace Poker
 
         public override string ToString()
         {
-            return $"{CardValue} of {CardSuite}";
+            return $"{CardValue} of {CardSuite}"; 
         }        
     }
 }
