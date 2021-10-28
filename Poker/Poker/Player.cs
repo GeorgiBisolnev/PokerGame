@@ -24,7 +24,7 @@ namespace Poker
 
         public string printHand()
         {
-            SordPlayerHand();
+            SortPlayerHand();
             var str = new StringBuilder();
             str.AppendLine($"Player {Name}:");
             str.AppendLine(string.Join(" ",Hand));
@@ -34,7 +34,7 @@ namespace Poker
         {
             if (sorting)
             {
-                SordPlayerHand();   
+                SortPlayerHand();   
             }
             var str = new StringBuilder();
             str.AppendLine($"Player {Name}:");
@@ -43,13 +43,22 @@ namespace Poker
         }
         public int GetNumberOfCards() => Hand.Count;
 
-        public void SordPlayerHand()
+        public void SortPlayerHand()
         {
             var newList = new List<Card>();
 
-            var sortedHand = Hand.OrderBy(x => (int)x.GetCardValue()).ToList();
+            var sortedHand = Hand.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => x.GetCardValueInt()).ToList();
             Hand = sortedHand;
 
+        }
+
+        public List<Card> GetPlayersCards()
+        {
+            return Hand;
+        }
+        public void ClearHand()
+        {
+            Hand.Clear();
         }
     }
 }

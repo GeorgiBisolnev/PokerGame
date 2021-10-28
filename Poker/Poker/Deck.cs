@@ -39,7 +39,7 @@ namespace Poker
             Random rnd = new Random();
             Card curCard = new Card();
 
-            for (int i = 0; i < 666; i++)
+            for (int i = 0; i < 1200; i++)
             {
                 int randomint = rnd.Next(deck.Count);
                 curCard = deck[randomint];
@@ -48,7 +48,10 @@ namespace Poker
             }
 
         }
-
+        public int GetNumberOfLeftCards()
+        {
+            return deck.Count;
+        }
         public void PrintDeck()
         {
             foreach (var card in deck)
