@@ -43,16 +43,25 @@ namespace Poker
                     deck.NewDeck();
                     deck.ShuffleDeck();
                 }
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     player1.addCard(deck.NextCard());
                     //table.addCard(deck.NextCard());
 
                 }
-                if (EvaluateTwoListOfCards(player1.GetPlayersCards(), new List<Card>()) == 1)
+                for (int i = 0; i < 5; i++)
                 {
-                    player1.SortPlayerHand(); table.SortPlayerHand();
+                    table.addCard(deck.NextCard());
+                    //table.addCard(deck.NextCard());
+
+                }
+                if (EvaluateTwoListOfCards(player1.GetPlayersCards(), table.GetPlayersCards()) == 1)
+                {
+                    Console.WriteLine("------------------------");
                     player1.printColoredHand();
+                    table.printColoredHand();
+                    Console.WriteLine("------------------------");
+                    Console.WriteLine();
                 }
             } while (true);
 
