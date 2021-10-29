@@ -15,25 +15,10 @@ namespace Poker
             deck.NewDeck();
 
             deck.ShuffleDeck();
-
-            //var test1 = new Player("test1");
-            //var testTable = new Player("TestTable");
-
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    test1.addCard(deck.NextCard());
-            //    testTable.addCard(deck.NextCard());
-
-            //}
-            //Console.WriteLine(EvaluateTwoListOfCards(test1.GetPlayersCards(), testTable.GetPlayersCards()));
-            //Console.WriteLine(test1.printHand());
-            //Console.WriteLine(testTable.printHand());
-
-
+ 
             var player1 = new Player("Georgi");
             var player2 = new Player("Ivan");
             var table = new Player("Table");
-            int count = 0;
             do
             {
                 player1.ClearHand();
@@ -46,17 +31,38 @@ namespace Poker
                 for (int i = 0; i < 2; i++)
                 {
                     player1.addCard(deck.NextCard());
-                    //table.addCard(deck.NextCard());
 
                 }
                 for (int i = 0; i < 5; i++)
                 {
                     table.addCard(deck.NextCard());
-                    //table.addCard(deck.NextCard());
 
                 }
-                if (EvaluateTwoListOfCards(player1.GetPlayersCards(), table.GetPlayersCards()) == 1)
+                List<Card> concat = player1.GetPlayersCards().Concat(table.GetPlayersCards()).ToList();
+                int score = Evaluate(concat);
+                
+                if (score>0)
                 {
+                    Console.WriteLine($"Score: {score}");
+                    if (score>8000 )
+                    {
+                        if (score==8014)
+                        {
+                            Console.WriteLine("Royal Fluash!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Straight Flush");
+                        }
+                    }
+                    else if (score>7000)
+                    {
+                        Console.WriteLine("Four-of-a-kind");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Something else!");
+                    }
                     Console.WriteLine("------------------------");
                     player1.printColoredHand();
                     table.printColoredHand();
@@ -65,93 +71,76 @@ namespace Poker
                 }
             } while (true);
 
-            player1.SortPlayerHand(); table.SortPlayerHand();
-            Console.WriteLine(count);
-            Console.WriteLine(player1.printHand() +"\n" + table.printHand());
+            //player1.SortPlayerHand(); table.SortPlayerHand();
+            //Console.WriteLine(count);
+            //Console.WriteLine(player1.printHand() +"\n" + table.printHand());
             
            
-            while (player1.GetNumberOfCards() < 5)
-            {
-                Console.WriteLine("-------------------");
-                if (player1.GetNumberOfCards()==0)
-                {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        player1.addCard(deck.NextCard());                        
-                        player2.addCard(deck.NextCard());
-                        table.addCard(deck.NextCard());
-                    }
+            //while (player1.GetNumberOfCards() < 5)
+            //{
+            //    Console.WriteLine("-------------------");
+            //    if (player1.GetNumberOfCards()==0)
+            //    {
+            //        for (int i = 0; i < 3; i++)
+            //        {
+            //            player1.addCard(deck.NextCard());                        
+            //            player2.addCard(deck.NextCard());
+            //            table.addCard(deck.NextCard());
+            //        }
 
-                    Console.WriteLine(player1.printHand());
-                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-                    Console.WriteLine(table.printHand(false)); 
-                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-                    Console.WriteLine(player2.printHand());
-                }
-                else if (player1.GetNumberOfCards() == 3)
-                {
-                    player1.addCard(deck.NextCard()); 
-                    player2.addCard(deck.NextCard()); 
-                    table.addCard(deck.NextCard());
+            //        Console.WriteLine(player1.printHand());
+            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
+            //        Console.WriteLine(table.printHand(false)); 
+            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
+            //        Console.WriteLine(player2.printHand());
+            //    }
+            //    else if (player1.GetNumberOfCards() == 3)
+            //    {
+            //        player1.addCard(deck.NextCard()); 
+            //        player2.addCard(deck.NextCard()); 
+            //        table.addCard(deck.NextCard());
 
-                    Console.WriteLine(player1.printHand());
-                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-                    Console.WriteLine(table.printHand(false));
-                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-                    Console.WriteLine(player2.printHand());
-                } else
-                {
-                    player1.addCard(deck.NextCard());
-                    player2.addCard(deck.NextCard());
-                    table.addCard(deck.NextCard());
+            //        Console.WriteLine(player1.printHand());
+            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
+            //        Console.WriteLine(table.printHand(false));
+            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
+            //        Console.WriteLine(player2.printHand());
+            //    } else
+            //    {
+            //        player1.addCard(deck.NextCard());
+            //        player2.addCard(deck.NextCard());
+            //        table.addCard(deck.NextCard());
 
-                    Console.WriteLine(player1.printHand());
-                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-                    Console.WriteLine(table.printHand(false));
-                    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-                    Console.WriteLine(player2.printHand());
-                }
-                Console.WriteLine("Pres any key to continue ...");
-                Console.ReadKey();
-                Console.Clear();
-            }
-        }
-        public static int EvaluateTwoListOfCards(List<Card> cards1, List<Card> cards2)
-        {
-            int evaluation = 0;
-            List<Card> cards = cards1.Concat(cards2).ToList();
-            //Royal Flush
-            var sortedCards = cards.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => (int)x.GetCardValueInt()).ToList();
-
-            if (StraightFlush(cards))
-            {
-                return 1;
-            }
-
-            return evaluation;
+            //        Console.WriteLine(player1.printHand());
+            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
+            //        Console.WriteLine(table.printHand(false));
+            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
+            //        Console.WriteLine(player2.printHand());
+            //    }
+            //    Console.WriteLine("Pres any key to continue ...");
+            //    Console.ReadKey();
+            //    Console.Clear();
+            //}
         }
 
-        private static int FindIndexOfHighValueCardBySuite(List<Card> cards, Suite s)
+        public static int Evaluate(List<Card> list)
         {
-            //var sortedCards = cards.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => (int)x.GetCardValueInt()).ToList();
-            int max = 0;
-            int maxIndex = -1;
-            if (cards.Count > 0)
-            {
-                for (int i = 0; i < cards.Count; i++)
-                {
-                    if (s == cards[i].GetCardSuite() && cards[i].GetCardValueInt() > max)
-                    {
-                        max = (int)cards[i].GetCardValueInt();
-                        maxIndex = i;
-                    }
-                }
-            }
-            return maxIndex;
-        }
+            int score = 0;
 
-        private static bool StraightFlush(List<Card> list)
+            if ( StraightFlush(list)>8000)
+            {
+                return StraightFlush(list);
+            }
+            else if (FourOfAKind(list)>7000)
+            {
+                return FourOfAKind(list);
+            }
+
+            return score;
+        }
+        private static int StraightFlush(List<Card> list)
         {
+            int score = 8000;
             var sortedCards = list.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => (int)x.GetCardValueInt()).ToList();
 
             if (sortedCards[0].GetCardSuite() == sortedCards[1].GetCardSuite() &&
@@ -164,7 +153,7 @@ namespace Poker
                     sortedCards[0].GetCardValueInt() == sortedCards[4].GetCardValueInt() + 4
                     )
             {
-                return true;
+                return score + sortedCards[0].GetCardValueInt();
             }
             if (sortedCards[1].GetCardSuite() == sortedCards[2].GetCardSuite() &&
                     sortedCards[1].GetCardSuite() == sortedCards[3].GetCardSuite() &&
@@ -176,7 +165,7 @@ namespace Poker
                     sortedCards[1].GetCardValueInt() == sortedCards[5].GetCardValueInt() + 4
                     )
             {
-                return true;
+                return score + sortedCards[1].GetCardValueInt();
             }
             if (sortedCards[2].GetCardSuite() == sortedCards[3].GetCardSuite() &&
                     sortedCards[2].GetCardSuite() == sortedCards[4].GetCardSuite() &&
@@ -188,10 +177,29 @@ namespace Poker
                     sortedCards[2].GetCardValueInt() == sortedCards[6].GetCardValueInt() + 4
                     )
             {
-                return true;
+                return score + sortedCards[2].GetCardValueInt();
             }
 
-            return false;
+            return score;
         }
+
+        public static int FourOfAKind(List<Card> list)
+        {
+            int score = 0;
+            var sortedCards = list.OrderByDescending(x =>x.GetCardValueInt()).ToList();
+            for (int i = 0; i < 4; i++)
+            {
+                if (sortedCards[i].GetCardValueInt() == sortedCards[i+1].GetCardValueInt()&&
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt() &&
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt())
+                {
+                    score = sortedCards.First(x => x.GetCardValueInt() != sortedCards[i].GetCardValueInt()).GetCardValueInt();
+                    score += 7000 + sortedCards[i].GetCardValueInt();
+                    return score;
+                }
+            }
+            return score;
+        }
+
     }
 }
