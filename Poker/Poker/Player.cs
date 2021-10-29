@@ -41,6 +41,27 @@ namespace Poker
             str.AppendLine(string.Join(" ", Hand));
             return str.ToString();
         }
+
+        public void printColoredHand()
+        {
+            Console.WriteLine($"Player {Name}:");
+            foreach (var card in Hand)
+            {
+                if (card.GetCardSuite()==Suite.Diamonds || card.GetCardSuite() == Suite.Hearts)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(card.ToString() + " ");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(card.ToString() + " ");
+                }
+
+            }
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
         public int GetNumberOfCards() => Hand.Count;
 
         public void SortPlayerHand()
@@ -59,6 +80,8 @@ namespace Poker
         public void ClearHand()
         {
             Hand.Clear();
+
+
         }
     }
 }

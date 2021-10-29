@@ -6,9 +6,9 @@ namespace Poker
 {
     public enum Suite
     {
-        Hearts,
-        Diamonds,
+        Hearts,        
         Clubs,
+        Diamonds,
         Spides
     }
     public enum Value

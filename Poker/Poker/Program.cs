@@ -38,19 +38,23 @@ namespace Poker
             {
                 player1.ClearHand();
                 table.ClearHand();
-                if (deck.GetNumberOfLeftCards()<10)
+                if (deck.GetNumberOfLeftCards()<7)
                 {
                     deck.NewDeck();
                     deck.ShuffleDeck();
                 }
-                count++;
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     player1.addCard(deck.NextCard());
-                    table.addCard(deck.NextCard());
+                    //table.addCard(deck.NextCard());
 
                 }
-            } while (EvaluateTwoListOfCards(player1.GetPlayersCards(), table.GetPlayersCards()) == 0);
+                if (EvaluateTwoListOfCards(player1.GetPlayersCards(), new List<Card>()) == 1)
+                {
+                    player1.SortPlayerHand(); table.SortPlayerHand();
+                    player1.printColoredHand();
+                }
+            } while (true);
 
             player1.SortPlayerHand(); table.SortPlayerHand();
             Console.WriteLine(count);
@@ -109,74 +113,8 @@ namespace Poker
             List<Card> cards = cards1.Concat(cards2).ToList();
             //Royal Flush
             var sortedCards = cards.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => (int)x.GetCardValueInt()).ToList();
-            int indexClubs = FindIndexOfHighValueCardBySuite(sortedCards, Suite.Clubs);
-            int indexDiamonds = FindIndexOfHighValueCardBySuite(sortedCards, Suite.Diamonds);
-            int indexHearts = FindIndexOfHighValueCardBySuite(sortedCards, Suite.Hearts);
-            int indexSpides = FindIndexOfHighValueCardBySuite(sortedCards, Suite.Spides);
 
-            bool Clubs5Found = false, Diamonds5Found = false, Hearts5Found = false, Spides5Found = false;
-            if ((sortedCards.Count - indexClubs) >= 5 && indexClubs>=0)
-            {
-                if (sortedCards[indexClubs].GetCardSuite() == sortedCards[indexClubs + 1].GetCardSuite() &&
-                    sortedCards[indexClubs].GetCardSuite() == sortedCards[indexClubs + 2].GetCardSuite() &&
-                    sortedCards[indexClubs].GetCardSuite() == sortedCards[indexClubs + 3].GetCardSuite() &&
-                    sortedCards[indexClubs].GetCardSuite() == sortedCards[indexClubs + 4].GetCardSuite() &&
-                    sortedCards[indexClubs].GetCardValueInt() == sortedCards[indexClubs + 1].GetCardValueInt() + 1 &&
-                    sortedCards[indexClubs].GetCardValueInt() == sortedCards[indexClubs + 2].GetCardValueInt() + 2 &&
-                    sortedCards[indexClubs].GetCardValueInt() == sortedCards[indexClubs + 3].GetCardValueInt() + 3 &&
-                    sortedCards[indexClubs].GetCardValueInt() == sortedCards[indexClubs + 4].GetCardValueInt() + 4
-                    )
-                {
-                    Clubs5Found = true;
-                }
-            }
-            if ((sortedCards.Count - indexDiamonds) >= 5 && indexDiamonds >= 0)
-            {
-                if (sortedCards[indexDiamonds].GetCardSuite() == sortedCards[indexDiamonds + 1].GetCardSuite() &&
-                    sortedCards[indexDiamonds].GetCardSuite() == sortedCards[indexDiamonds + 2].GetCardSuite() &&
-                    sortedCards[indexDiamonds].GetCardSuite() == sortedCards[indexDiamonds + 3].GetCardSuite() &&
-                    sortedCards[indexDiamonds].GetCardSuite() == sortedCards[indexDiamonds + 4].GetCardSuite() &&
-                    sortedCards[indexDiamonds].GetCardValueInt() == sortedCards[indexDiamonds + 1].GetCardValueInt() + 1 &&
-                    sortedCards[indexDiamonds].GetCardValueInt() == sortedCards[indexDiamonds + 2].GetCardValueInt() + 2 &&
-                    sortedCards[indexDiamonds].GetCardValueInt() == sortedCards[indexDiamonds + 3].GetCardValueInt() + 3 &&
-                    sortedCards[indexDiamonds].GetCardValueInt() == sortedCards[indexDiamonds + 4].GetCardValueInt() + 4
-                    )
-                {
-                    Diamonds5Found = true;
-                }
-            }
-            if ((sortedCards.Count - indexHearts) >= 5 && indexHearts >= 0)
-            {
-                if (sortedCards[indexHearts].GetCardSuite() == sortedCards[indexHearts + 1].GetCardSuite() &&
-                    sortedCards[indexHearts].GetCardSuite() == sortedCards[indexHearts + 2].GetCardSuite() &&
-                    sortedCards[indexHearts].GetCardSuite() == sortedCards[indexHearts + 3].GetCardSuite() &&
-                    sortedCards[indexHearts].GetCardSuite() == sortedCards[indexHearts + 4].GetCardSuite() &&
-                    sortedCards[indexHearts].GetCardValueInt() == sortedCards[indexHearts + 1].GetCardValueInt() + 1 &&
-                    sortedCards[indexHearts].GetCardValueInt() == sortedCards[indexHearts + 2].GetCardValueInt() + 2 &&
-                    sortedCards[indexHearts].GetCardValueInt() == sortedCards[indexHearts + 3].GetCardValueInt() + 3 &&
-                    sortedCards[indexHearts].GetCardValueInt() == sortedCards[indexHearts + 4].GetCardValueInt() + 4
-                    )
-                {
-                    Hearts5Found = true;
-                }
-            }
-            if ((sortedCards.Count - indexSpides) >= 5 && indexSpides >= 0)
-            {
-                if (sortedCards[indexSpides].GetCardSuite() == sortedCards[indexSpides + 1].GetCardSuite() &&
-                    sortedCards[indexSpides].GetCardSuite() == sortedCards[indexSpides + 2].GetCardSuite() &&
-                    sortedCards[indexSpides].GetCardSuite() == sortedCards[indexSpides + 3].GetCardSuite() &&
-                    sortedCards[indexSpides].GetCardSuite() == sortedCards[indexSpides + 4].GetCardSuite() &&
-                    sortedCards[indexSpides].GetCardValueInt() == sortedCards[indexSpides + 1].GetCardValueInt() + 1 &&
-                    sortedCards[indexSpides].GetCardValueInt() == sortedCards[indexSpides + 2].GetCardValueInt() + 2 &&
-                    sortedCards[indexSpides].GetCardValueInt() == sortedCards[indexSpides + 3].GetCardValueInt() + 3 &&
-                    sortedCards[indexSpides].GetCardValueInt() == sortedCards[indexSpides + 4].GetCardValueInt() + 4
-                    )
-                {
-                    Spides5Found = true;
-                }
-            }
-
-            if (Clubs5Found == true || Diamonds5Found == true || Hearts5Found == true || Spides5Found == true)
+            if (StraightFlush(cards))
             {
                 return 1;
             }
@@ -201,6 +139,50 @@ namespace Poker
                 }
             }
             return maxIndex;
+        }
+
+        private static bool StraightFlush(List<Card> list)
+        {
+            var sortedCards = list.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => (int)x.GetCardValueInt()).ToList();
+
+            if (sortedCards[0].GetCardSuite() == sortedCards[1].GetCardSuite() &&
+                    sortedCards[0].GetCardSuite() == sortedCards[2].GetCardSuite() &&
+                    sortedCards[0].GetCardSuite() == sortedCards[3].GetCardSuite() &&
+                    sortedCards[0].GetCardSuite() == sortedCards[4].GetCardSuite() &&
+                    sortedCards[0].GetCardValueInt() == sortedCards[1].GetCardValueInt() + 1 &&
+                    sortedCards[0].GetCardValueInt() == sortedCards[2].GetCardValueInt() + 2 &&
+                    sortedCards[0].GetCardValueInt() == sortedCards[3].GetCardValueInt() + 3 &&
+                    sortedCards[0].GetCardValueInt() == sortedCards[4].GetCardValueInt() + 4
+                    )
+            {
+                return true;
+            }
+            if (sortedCards[1].GetCardSuite() == sortedCards[2].GetCardSuite() &&
+                    sortedCards[1].GetCardSuite() == sortedCards[3].GetCardSuite() &&
+                    sortedCards[1].GetCardSuite() == sortedCards[4].GetCardSuite() &&
+                    sortedCards[1].GetCardSuite() == sortedCards[5].GetCardSuite() &&
+                    sortedCards[1].GetCardValueInt() == sortedCards[2].GetCardValueInt() + 1 &&
+                    sortedCards[1].GetCardValueInt() == sortedCards[3].GetCardValueInt() + 2 &&
+                    sortedCards[1].GetCardValueInt() == sortedCards[4].GetCardValueInt() + 3 &&
+                    sortedCards[1].GetCardValueInt() == sortedCards[5].GetCardValueInt() + 4
+                    )
+            {
+                return true;
+            }
+            if (sortedCards[2].GetCardSuite() == sortedCards[3].GetCardSuite() &&
+                    sortedCards[2].GetCardSuite() == sortedCards[4].GetCardSuite() &&
+                    sortedCards[2].GetCardSuite() == sortedCards[5].GetCardSuite() &&
+                    sortedCards[2].GetCardSuite() == sortedCards[6].GetCardSuite() &&
+                    sortedCards[2].GetCardValueInt() == sortedCards[3].GetCardValueInt() + 1 &&
+                    sortedCards[2].GetCardValueInt() == sortedCards[4].GetCardValueInt() + 2 &&
+                    sortedCards[2].GetCardValueInt() == sortedCards[5].GetCardValueInt() + 3 &&
+                    sortedCards[2].GetCardValueInt() == sortedCards[6].GetCardValueInt() + 4
+                    )
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
