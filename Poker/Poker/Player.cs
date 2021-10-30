@@ -27,6 +27,7 @@ namespace Poker
             string result = (string.Join(" ",Hand));
             return result;
         }
+
         public string printHand(bool sorting)
         {
             if (sorting)

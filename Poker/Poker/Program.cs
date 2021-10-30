@@ -146,7 +146,7 @@ namespace Poker
             Player table = new Player("Table");
             do
             {
-                players = players.OrderByDescending(x => x.Key.Name).ToDictionary(x => x.Key, x => x.Value);
+                players = players.OrderBy(x => x.Key.Name).ToDictionary(x => x.Key, x => x.Value);
                 if (deck.GetNumberOfLeftCards()<players.Count*2+5)
                 {
                     deck.NewDeck(); deck.ShuffleDeck();
@@ -201,13 +201,14 @@ namespace Poker
                     table.addCard(curCard);
                 }
                 Console.Clear();
-                double max = 0;
+                
                 string winner = "";
                 Console.WriteLine("--------------------------------------------------------------");                
                 string playerStr= "Player name", handStr="Players hand", evaluationStr="Evaluation";
                 Console.WriteLine($"{playerStr,15} |{ handStr,15 }   |   {evaluationStr,14}   ");
                 Console.WriteLine("                |                  |                    ");
                 Console.WriteLine("--------------------------------------------------------------");
+                double maxEvaluationResult = 0;
                 if (table.GetNumberOfCards() == 5)
                 {
                     foreach (var player in players)
@@ -217,34 +218,48 @@ namespace Poker
                         double evaluationScore = double.Parse(Evaluate(conc)[1]);
                         player.Value[0] = result;
                         player.Value[1] = evaluationScore.ToString();
+                        if (evaluationScore > maxEvaluationResult)
+                        {
+                            maxEvaluationResult = evaluationScore;
+                        }
                     }
 
                     players = players.OrderByDescending(x => double.Parse(x.Value[1])).ToDictionary(x=>x.Key, x=>x.Value);
                 }
+                
                 foreach (var player in players)
                 {
                     
                     if (table.GetNumberOfCards() == 5)
                     {
-                        
+
                         //List<Card> conc = player.Key.GetPlayersCards().Concat(table.GetPlayersCards()).ToList();
                         //string result = Evaluate(conc)[0];
                         //double evaluationScore = double.Parse(Evaluate(conc)[1]);
-                        Console.WriteLine($"{player.Key.Name,15} | {player.Key.printHand(),15}  |{player.Value[0],15}  |{player.Value[1],7}");
+                        if (double.Parse(player.Value[1])== maxEvaluationResult)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"{player.Key.Name,15} | {player.Key.printHand(),15}  |{player.Value[0],15}  |{player.Value[1],7}  - Winner hand");
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{player.Key.Name,15} | {player.Key.printHand(),15}  |{player.Value[0],15}  |{player.Value[1],7}");
+                        }
+                        
                     }
                     else 
                     {
                         Console.WriteLine($"{player.Key.Name,15} | {player.Key.printHand(),15}");
                     }
                 }
-                if (max>0)
-                {
-                    
-                    Console.WriteLine($"Winner is {winner}");
-                }
+                Console.WriteLine("--------------------------------------------------------------");
                 Console.WriteLine();
                 Console.WriteLine("--- Table cards ---");
                 Console.WriteLine(table.printHand());
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("Press any kay to continue ...");
             Console.ReadKey();
             Console.Clear();
             } while (true);
