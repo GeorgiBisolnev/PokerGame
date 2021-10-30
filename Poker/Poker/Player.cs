@@ -24,20 +24,8 @@ namespace Poker
 
         public string printHand()
         {
-            SortPlayerHand();
-            var str = new StringBuilder();
-            if (Name.ToLower()=="table")
-            {
-                str.AppendLine($"{Name}:");
-            }
-            else
-            {
-                str.AppendLine($"Player {Name}:");
-            }
-            
-
-            str.AppendLine(string.Join(" ",Hand));
-            return str.ToString();
+            string result = (string.Join(" ",Hand));
+            return result;
         }
         public string printHand(bool sorting)
         {

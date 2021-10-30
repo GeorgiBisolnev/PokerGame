@@ -134,18 +134,19 @@ namespace Poker
             Console.Write("Number of players= ");
             int numberOfPlaeyrs = int.Parse(Console.ReadLine());
 
-            List<Player> players = new List<Player>();
+            Dictionary<Player,string []> players = new Dictionary<Player, string[]>();
 
             for (int i = 0; i < numberOfPlaeyrs; i++)
             {
                 Console.Write($"Player {i} name is - > ");
                 Player curPlayer = new Player(Console.ReadLine());
-                players.Add(curPlayer);
+                players.Add(curPlayer,new string[2]);
             }
             Deck deck = new Deck(); deck.NewDeck(); deck.ShuffleDeck();
             Player table = new Player("Table");
             do
             {
+                players = players.OrderByDescending(x => x.Key.Name).ToDictionary(x => x.Key, x => x.Value);
                 if (deck.GetNumberOfLeftCards()<players.Count*2+5)
                 {
                     deck.NewDeck(); deck.ShuffleDeck();
@@ -155,7 +156,7 @@ namespace Poker
                     table.ClearHand();
                     foreach (var player in players)
                     {
-                        player.ClearHand();
+                        player.Key.ClearHand();
                     }
                 }
 
@@ -166,13 +167,13 @@ namespace Poker
                     {
                         Card curCard = new Card();
                         curCard = deck.NextCard();
-                        player.addCard(curCard);
+                        player.Key.addCard(curCard);
                     }
                     foreach (var player in players)
                     {
                         Card curCard = new Card();
                         curCard = deck.NextCard();
-                        player.addCard(curCard);
+                        player.Key.addCard(curCard);
                     }
                 }
                 
@@ -199,36 +200,55 @@ namespace Poker
                     curCard = deck.NextCard();
                     table.addCard(curCard);
                 }
-
+                Console.Clear();
                 double max = 0;
                 string winner = "";
+                Console.WriteLine("--------------------------------------------------------------");                
+                string playerStr= "Player name", handStr="Players hand", evaluationStr="Evaluation";
+                Console.WriteLine($"{playerStr,15} |{ handStr,15 }   |   {evaluationStr,14}   ");
+                Console.WriteLine("                |                  |                    ");
+                Console.WriteLine("--------------------------------------------------------------");
+                if (table.GetNumberOfCards() == 5)
+                {
+                    foreach (var player in players)
+                    {
+                        List<Card> conc = player.Key.GetPlayersCards().Concat(table.GetPlayersCards()).ToList();
+                        string result = Evaluate(conc)[0];
+                        double evaluationScore = double.Parse(Evaluate(conc)[1]);
+                        player.Value[0] = result;
+                        player.Value[1] = evaluationScore.ToString();
+                    }
+
+                    players = players.OrderByDescending(x => double.Parse(x.Value[1])).ToDictionary(x=>x.Key, x=>x.Value);
+                }
                 foreach (var player in players)
                 {
-                    player.printColoredHand();
-                    if (table.GetPlayersCards().Count==5)
-                    {
-                        Console.WriteLine(Evaluate(player.GetPlayersCards().Concat(table.GetPlayersCards()).ToList())[0]);
-                        if(max < double.Parse(Evaluate(player.GetPlayersCards().Concat(table.GetPlayersCards()).ToList())[1]))
-                        {
-                            max = double.Parse(Evaluate(player.GetPlayersCards().Concat(table.GetPlayersCards()).ToList())[1]);
-                            winner = player.Name;
-                        }
-                        Console.WriteLine(Evaluate(player.GetPlayersCards().Concat(table.GetPlayersCards()).ToList())[1]);
-                    }
                     
+                    if (table.GetNumberOfCards() == 5)
+                    {
+                        
+                        //List<Card> conc = player.Key.GetPlayersCards().Concat(table.GetPlayersCards()).ToList();
+                        //string result = Evaluate(conc)[0];
+                        //double evaluationScore = double.Parse(Evaluate(conc)[1]);
+                        Console.WriteLine($"{player.Key.Name,15} | {player.Key.printHand(),15}  |{player.Value[0],15}  |{player.Value[1],7}");
+                    }
+                    else 
+                    {
+                        Console.WriteLine($"{player.Key.Name,15} | {player.Key.printHand(),15}");
+                    }
                 }
                 if (max>0)
                 {
+                    
                     Console.WriteLine($"Winner is {winner}");
                 }
-                table.printColoredHand();
-
+                Console.WriteLine();
+                Console.WriteLine("--- Table cards ---");
+                Console.WriteLine(table.printHand());
             Console.ReadKey();
             Console.Clear();
             } while (true);
-
         }
-
         public static string[] Evaluate(List<Card> list)
         {
             int evaluationScore = 0;
