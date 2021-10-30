@@ -9,7 +9,34 @@ namespace Poker
     public class Program
     {
         static void Main(string[] args)
+
         {
+            //Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
+            //Card card7 = new Card();
+            //card1.SetCardValue(Value.King);
+            //card1.SetCardSuite(Suite.Hearts);
+
+            //card2.SetCardValue(Value.ten);
+            //card2.SetCardSuite(Suite.Hearts);
+
+            //card3.SetCardValue(Value.ten);
+            //card3.SetCardSuite(Suite.Clubs);
+
+            //card4.SetCardValue(Value.ten);
+            //card4.SetCardSuite(Suite.Diamonds);
+
+            //card5.SetCardValue(Value.three);
+            //card5.SetCardSuite(Suite.Hearts);
+
+            //card6.SetCardValue(Value.two);
+            //card6.SetCardSuite(Suite.Hearts);
+
+            //card7.SetCardValue(Value.two);
+            //card7.SetCardSuite(Suite.Diamonds);
+            //List<Card> testList = new List<Card> { card1, card2, card3, card4, card5, card6, card7 };
+
+            //int test = FullHouse(testList);
+
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
             Deck deck = new Deck();
 
@@ -62,13 +89,24 @@ namespace Poker
                     }
                     else if (score > 6000)
                     {
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
                         Console.WriteLine("Full House");
-
+                        Console.ForegroundColor = ConsoleColor.Gray;
                     }
                     else if (score>5000)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                    {                        
                         Console.WriteLine("Flush");
+                    }
+                    else if (score>4000)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("Staight");
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }
+                    else if (score>3000)
+                    {                        
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Three Of A Kind");
                         Console.ForegroundColor = ConsoleColor.Gray;
                     }
                     else
@@ -154,7 +192,15 @@ namespace Poker
             else if (Flush(list)>5000)
             {
                 return Flush(list);
-            }   
+            }
+            else if (Straight(list)>4000)
+            {
+                return Straight(list);
+            }
+            else if (ThreeOfAKind(list)>3000)
+            {
+                return ThreeOfAKind(list);
+            }
 
             return score;
         }
@@ -225,20 +271,22 @@ namespace Poker
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
-
-            sortedCards.RemoveAt(sortedCards.Count - 1);
-            sortedCards.RemoveAt(sortedCards.Count - 1);
-
-            if (sortedCards[0].GetCardValueInt()== sortedCards[1].GetCardValueInt() && sortedCards[0].GetCardValueInt()== sortedCards[2].GetCardValueInt() &&
-                sortedCards[3].GetCardValueInt()== sortedCards[4].GetCardValueInt()||
-                sortedCards[0].GetCardValueInt()== sortedCards[1].GetCardValueInt()&&
-                sortedCards[2].GetCardValueInt()== sortedCards[3].GetCardValueInt() && sortedCards[2].GetCardValueInt()== sortedCards[4].GetCardValueInt())
+            for (int i = 0; i < list.Count-3; i++)
             {
-                foreach (var card in sortedCards)
+                if (sortedCards[i].GetCardValueInt()== sortedCards[i+1].GetCardValueInt()&& sortedCards[i].GetCardValueInt()== sortedCards[i+2].GetCardValueInt())
                 {
-                    score += card.GetCardValueInt();
+                    int intThree = sortedCards[i].GetCardValueInt();
+                    var sortedlist2 = sortedCards.Where(v => v.GetCardValueInt() != intThree).ToList();
+
+                    for (int j = 0; j < sortedlist2.Count-2; j++)
+                    {
+                        if (sortedlist2[j].GetCardValueInt()== sortedlist2[j+1].GetCardValueInt())
+                        {
+                            score = 6000 +intThree * 10 * 3 + sortedlist2[j].GetCardValueInt() * 2;
+                            return score;
+                        }
+                    }
                 }
-                return score+6000;
             }
 
             return score;
@@ -248,13 +296,6 @@ namespace Poker
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardSuite()).ThenByDescending(v=>v.GetCardValueInt()).ToList();
-
-            if (sortedCards[0].GetCardSuite()== sortedCards[1].GetCardSuite()&& sortedCards[0].GetCardSuite()== sortedCards[2].GetCardSuite()&&
-                sortedCards[0].GetCardSuite()== sortedCards[3].GetCardSuite()&& sortedCards[0].GetCardSuite()== sortedCards[4].GetCardSuite()) 
-            {
-                score = 5000 + sortedCards[0].GetCardValueInt();
-                return score;
-            }
 
             for (int i = 0; i < 3; i++)
             {
@@ -266,6 +307,46 @@ namespace Poker
                 }
             }
             
+
+            return score;
+        }
+
+        public static int Straight(List<Card> list)
+        {
+            int score = 0;
+            var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt()+1 && sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt()+2 &&
+                sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt()+3 && sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt()+4)
+                {
+                    score = 4000 + sortedCards[i].GetCardValueInt();
+                    return score;
+                }
+            }
+
+
+            return score;
+        }
+
+        public static int ThreeOfAKind(List<Card> list)
+        {
+            int score = 0;
+            var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt() && sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt())
+                {
+                    int intThreeOfAKind = sortedCards[i].GetCardValueInt();
+                    score = 3000 + sortedCards[i].GetCardValueInt()*3*10;
+                    sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).Where(v => v.GetCardValueInt() != intThreeOfAKind).ToList();
+                    score += sortedCards[0].GetCardValueInt() * 10 + sortedCards[1].GetCardValueInt();
+                    return score;
+                }
+            }
+
 
             return score;
         }
