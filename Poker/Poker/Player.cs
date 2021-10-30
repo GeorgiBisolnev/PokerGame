@@ -26,7 +26,16 @@ namespace Poker
         {
             SortPlayerHand();
             var str = new StringBuilder();
-            str.AppendLine($"Player {Name}:");
+            if (Name.ToLower()=="table")
+            {
+                str.AppendLine($"{Name}:");
+            }
+            else
+            {
+                str.AppendLine($"Player {Name}:");
+            }
+            
+
             str.AppendLine(string.Join(" ",Hand));
             return str.ToString();
         }
@@ -37,13 +46,24 @@ namespace Poker
                 SortPlayerHand();   
             }
             var str = new StringBuilder();
-            str.AppendLine($"Player {Name}:");
+            if (Name.ToLower() == "table")
+            {
+                str.AppendLine($"{Name}:");
+            }
+            else
+            {
+                str.AppendLine($"Player {Name}:");
+            }
             str.AppendLine(string.Join(" ", Hand));
             return str.ToString();
         }
 
         public void printColoredHand()
         {
+            if (Name.ToLower()=="table")
+            {
+                Console.WriteLine($"{Name} cards:");
+            } else
             Console.WriteLine($"Player {Name}:");
             foreach (var card in Hand)
             {

@@ -37,95 +37,54 @@ namespace Poker
 
             //int test = FullHouse(testList);
 
-            Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            Deck deck = new Deck();
+            //Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            //Deck deck = new Deck();
 
-            deck.NewDeck();
+            //deck.NewDeck();
 
-            deck.ShuffleDeck();
- 
-            var player1 = new Player("Georgi");
-            var player2 = new Player("Ivan");
-            var table = new Player("Table");
-            do
-            {
-                player1.ClearHand();
-                table.ClearHand();
-                if (deck.GetNumberOfLeftCards()<7)
-                {
-                    deck.NewDeck();
-                    deck.ShuffleDeck();
-                }
-                for (int i = 0; i < 2; i++)
-                {
-                    player1.addCard(deck.NextCard());
+            //deck.ShuffleDeck();
 
-                }
-                for (int i = 0; i < 5; i++)
-                {
-                    table.addCard(deck.NextCard());
+            //var player1 = new Player("Georgi");
+            //var player2 = new Player("Ivan");
+            //var table = new Player("Table");
+            //do
+            //{
+            //    player1.ClearHand();
+            //    table.ClearHand();
+            //    if (deck.GetNumberOfLeftCards()<7)
+            //    {
+            //        deck.NewDeck();
+            //        deck.ShuffleDeck();
+            //    }
+            //    for (int i = 0; i < 2; i++)
+            //    {
+            //        player1.addCard(deck.NextCard());
 
-                }
-                List<Card> concat = player1.GetPlayersCards().Concat(table.GetPlayersCards()).ToList();
-                int score = Evaluate(concat);
-                
-                if (score>0)
-                {
-                    Console.WriteLine($"Evaluation Score: {score}");
-                    if (score>8000 )
-                    {
-                        if (score==8014)
-                        {
-                            Console.WriteLine("Royal Fluash!");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Straight Flush");
-                        }
-                    }
-                    else if (score>7000)
-                    {
-                        Console.WriteLine("Four-of-a-kind");
-                    }
-                    else if (score > 6000)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkBlue;
-                        Console.WriteLine("Full House");
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                    }
-                    else if (score>5000)
-                    {                        
-                        Console.WriteLine("Flush");
-                    }
-                    else if (score>4000)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("Staight");
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                    }
-                    else if (score>3000)
-                    {                        
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Three Of A Kind");
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Something else!");
-                    }
-                    Console.WriteLine("------------------------");
-                    player1.printColoredHand();
-                    table.printColoredHand();
-                    Console.WriteLine("------------------------");
-                    Console.WriteLine();
-                }
-            } while (true);
+            //    }
+            //    for (int i = 0; i < 5; i++)
+            //    {
+            //        table.addCard(deck.NextCard());
+
+            //    }
+            //    List<Card> concat = player1.GetPlayersCards().Concat(table.GetPlayersCards()).ToList();
+
+
+
+            //    Console.WriteLine(Evaluate(concat));
+            //        Console.ForegroundColor = ConsoleColor.Gray;
+            //        Console.WriteLine("------------------------");
+            //        player1.printColoredHand();
+            //        table.printColoredHand();
+            //        Console.WriteLine("------------------------");
+            //        Console.WriteLine();
+
+            //} while (true);
 
             //player1.SortPlayerHand(); table.SortPlayerHand();
             //Console.WriteLine(count);
             //Console.WriteLine(player1.printHand() +"\n" + table.printHand());
-            
-           
+
+
             //while (player1.GetNumberOfCards() < 5)
             //{
             //    Console.WriteLine("-------------------");
@@ -171,42 +130,195 @@ namespace Poker
             //    Console.ReadKey();
             //    Console.Clear();
             //}
+
+            Console.Write("Number of players= ");
+            int numberOfPlaeyrs = int.Parse(Console.ReadLine());
+
+            List<Player> players = new List<Player>();
+
+            for (int i = 0; i < numberOfPlaeyrs; i++)
+            {
+                Console.Write($"Player {i} name is - > ");
+                Player curPlayer = new Player(Console.ReadLine());
+                players.Add(curPlayer);
+            }
+            Deck deck = new Deck(); deck.NewDeck(); deck.ShuffleDeck();
+            Player table = new Player("Table");
+            do
+            {
+                if (deck.GetNumberOfLeftCards()<players.Count*2+5)
+                {
+                    deck.NewDeck(); deck.ShuffleDeck();
+                }
+                if (table.GetNumberOfCards()==5)
+                {
+                    table.ClearHand();
+                    foreach (var player in players)
+                    {
+                        player.ClearHand();
+                    }
+                }
+
+
+                if (table.GetNumberOfCards() == 0)
+                {
+                    foreach (var player in players)
+                    {
+                        Card curCard = new Card();
+                        curCard = deck.NextCard();
+                        player.addCard(curCard);
+                    }
+                    foreach (var player in players)
+                    {
+                        Card curCard = new Card();
+                        curCard = deck.NextCard();
+                        player.addCard(curCard);
+                    }
+                }
+                
+
+                if (table.GetPlayersCards().Count==0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Card curCard = new Card();
+                        curCard = deck.NextCard();
+                        table.addCard(curCard);
+                    }
+                    deck.NextCard();
+                }
+                else if (table.GetPlayersCards().Count == 0)
+                {
+                    Card curCard = new Card();
+                    curCard = deck.NextCard();
+                    table.addCard(curCard);
+                    deck.NextCard();
+                } else
+                {
+                    Card curCard = new Card();
+                    curCard = deck.NextCard();
+                    table.addCard(curCard);
+                }
+
+                double max = 0;
+                string winner = "";
+                foreach (var player in players)
+                {
+                    player.printColoredHand();
+                    if (table.GetPlayersCards().Count==5)
+                    {
+                        Console.WriteLine(Evaluate(player.GetPlayersCards().Concat(table.GetPlayersCards()).ToList())[0]);
+                        if(max < double.Parse(Evaluate(player.GetPlayersCards().Concat(table.GetPlayersCards()).ToList())[1]))
+                        {
+                            max = double.Parse(Evaluate(player.GetPlayersCards().Concat(table.GetPlayersCards()).ToList())[1]);
+                            winner = player.Name;
+                        }
+                        Console.WriteLine(Evaluate(player.GetPlayersCards().Concat(table.GetPlayersCards()).ToList())[1]);
+                    }
+                    
+                }
+                if (max>0)
+                {
+                    Console.WriteLine($"Winner is {winner}");
+                }
+                table.printColoredHand();
+
+            Console.ReadKey();
+            Console.Clear();
+            } while (true);
+
         }
 
-        public static int Evaluate(List<Card> list)
+        public static string[] Evaluate(List<Card> list)
         {
-            int score = 0;
+            int evaluationScore = 0;
+            string returnString = "";
+            if ( StraightFlush(list)>80000)
+            {
+                evaluationScore = StraightFlush(list);
+            }
+            else if (FourOfAKind(list)>70000)
+            {
+                evaluationScore= FourOfAKind(list);
+            }
+            else if (FullHouse(list)>60000)
+            {
+                evaluationScore= FullHouse(list);
+            }
+            else if (Flush(list)>50000)
+            {
+                evaluationScore= Flush(list);
+            }
+            else if (Straight(list)>40000)
+            {
+                evaluationScore= Straight(list);
+            }
+            else if (ThreeOfAKind(list)>30000)
+            {
+                evaluationScore= ThreeOfAKind(list);
+            }
+            else if (TwoPair(list)>20000)
+            {
+                evaluationScore= TwoPair(list);
+            }
+            else if (OnePair(list)>10000)
+            {
+                evaluationScore= OnePair(list);
+            } else
+            {
+                evaluationScore= HighCard(list);
+            }
+            returnString= ($"Evaluation Score: {evaluationScore}");
+                if (evaluationScore > 80000)
+                {
+                    if (evaluationScore == 80014)
+                    {
+                        returnString=("--Royal Fluash!--");
+                    }
+                    else
+                    {
+                        returnString=("Straight Flush");
+                    }
+                }
+                else if (evaluationScore > 70000)
+                {
+                    returnString=("Four-of-a-kind");
+                }
+                else if (evaluationScore > 60000)
+                {                    
+                    returnString=("Full House");
+                }
+                else if (evaluationScore > 50000)
+                {
+                    returnString=("Flush");
+                }
+                else if (evaluationScore > 40000)
+                {
+                    returnString=("Staight");
+                }
+                else if (evaluationScore > 30000)
+                {
+                    returnString=("Three Of A Kind");
+                }
+                else if (evaluationScore > 20000)
+                {
+                    returnString=("Two pairs");
+                }
+                else if (evaluationScore > 10000)
+                {
+                    returnString=("One pair");
+                }
+                else
+                {
+                    returnString=("High card");
+                }
 
-            if ( StraightFlush(list)>8000)
-            {
-                return StraightFlush(list);
-            }
-            else if (FourOfAKind(list)>7000)
-            {
-                return FourOfAKind(list);
-            }
-            else if (FullHouse(list)>6000)
-            {
-                return FullHouse(list);
-            }
-            else if (Flush(list)>5000)
-            {
-                return Flush(list);
-            }
-            else if (Straight(list)>4000)
-            {
-                return Straight(list);
-            }
-            else if (ThreeOfAKind(list)>3000)
-            {
-                return ThreeOfAKind(list);
-            }
-
-            return score;
+            double d = evaluationScore / 10000.0;
+            return  new string[] { returnString, d.ToString() };
         }
         private static int StraightFlush(List<Card> list)
         {
-            int score = 8000;
+            int score = 80000;
             var sortedCards = list.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => (int)x.GetCardValueInt()).ToList();
 
             if (sortedCards[0].GetCardSuite() == sortedCards[1].GetCardSuite() &&
@@ -260,7 +372,7 @@ namespace Poker
                     sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt())
                 {
                     score = sortedCards.First(x => x.GetCardValueInt() != sortedCards[i].GetCardValueInt()).GetCardValueInt();
-                    score += 7000 + sortedCards[i].GetCardValueInt();
+                    score += 70000 + sortedCards[i].GetCardValueInt();
                     return score;
                 }
             }
@@ -282,7 +394,7 @@ namespace Poker
                     {
                         if (sortedlist2[j].GetCardValueInt()== sortedlist2[j+1].GetCardValueInt())
                         {
-                            score = 6000 +intThree * 10 * 3 + sortedlist2[j].GetCardValueInt() * 2;
+                            score = 60000 +intThree * 10 * 3 + sortedlist2[j].GetCardValueInt() * 2;
                             return score;
                         }
                     }
@@ -302,7 +414,7 @@ namespace Poker
                 if (sortedCards[i].GetCardSuite() == sortedCards[i+1].GetCardSuite() && sortedCards[i].GetCardSuite() == sortedCards[i+2].GetCardSuite() &&
                 sortedCards[i].GetCardSuite() == sortedCards[i+3].GetCardSuite() && sortedCards[i].GetCardSuite() == sortedCards[i+4].GetCardSuite())
                 {
-                    score = 5000 + sortedCards[i].GetCardValueInt();
+                    score = 50000 + sortedCards[i].GetCardValueInt();
                     return score;
                 }
             }
@@ -321,7 +433,7 @@ namespace Poker
                 if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt()+1 && sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt()+2 &&
                 sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt()+3 && sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt()+4)
                 {
-                    score = 4000 + sortedCards[i].GetCardValueInt();
+                    score = 40000 + sortedCards[i].GetCardValueInt();
                     return score;
                 }
             }
@@ -340,7 +452,7 @@ namespace Poker
                 if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt() && sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt())
                 {
                     int intThreeOfAKind = sortedCards[i].GetCardValueInt();
-                    score = 3000 + sortedCards[i].GetCardValueInt()*3*10;
+                    score = 30000 + sortedCards[i].GetCardValueInt()*3*30;
                     sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).Where(v => v.GetCardValueInt() != intThreeOfAKind).ToList();
                     score += sortedCards[0].GetCardValueInt() * 10 + sortedCards[1].GetCardValueInt();
                     return score;
@@ -351,5 +463,70 @@ namespace Poker
             return score;
         }
 
+        public static int TwoPair(List<Card> list)
+        {
+            int score = 0;
+            var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
+
+            for (int i = 0; i < sortedCards.Count-1; i++)
+            {
+                if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt())
+                {
+                    int intTwoOfAKind = sortedCards[i].GetCardValueInt();
+                    
+                    var sortedCards2 = list.OrderByDescending(x => x.GetCardValueInt()).Where(v => v.GetCardValueInt() != intTwoOfAKind).ToList();
+                    for (int j = 0; j < sortedCards2.Count-1; j++)
+                    {
+                        if (sortedCards2[j].GetCardValueInt() == sortedCards2[j + 1].GetCardValueInt())
+                        {
+                            int intTwoOfAKind2 = sortedCards2[j].GetCardValueInt();
+                            int intHighCard = sortedCards2.First(v => v.GetCardValueInt() != intTwoOfAKind2).GetCardValueInt();
+                            score = 20000 + intTwoOfAKind * 2 * 30 + intTwoOfAKind2*2*10 + intHighCard;
+                            return score;
+                        }
+                    }                   
+                }
+            }
+
+
+            return score;
+        }
+
+        public static int OnePair(List<Card> list)
+        {
+            int score = 0;
+            var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
+
+            for (int i = 0; i < sortedCards.Count - 1; i++)
+            {
+                if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt())
+                {
+                    int intTwoOfAKind = sortedCards[i].GetCardValueInt();
+
+                    var sortedCards2 = list.OrderByDescending(x => x.GetCardValueInt()).Where(v => v.GetCardValueInt() != intTwoOfAKind).ToList();
+
+                    int intHightCard1 = sortedCards2[0].GetCardValueInt();
+                    int intHightCard2 = sortedCards2[1].GetCardValueInt();
+                    int intHightCard3 = sortedCards2[2].GetCardValueInt();
+
+                    score = 10000 + 2 * intTwoOfAKind * 8 + intHightCard1 + intHightCard2+ intHightCard3;
+
+                    return score;
+                }
+            }
+
+
+            return score;
+        }
+        public static int HighCard(List<Card> list)
+        {
+            int score = 0;
+            var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
+
+            score = sortedCards[0].GetCardValueInt() + sortedCards[1].GetCardValueInt() + sortedCards[2].GetCardValueInt() +
+                sortedCards[3].GetCardValueInt() + sortedCards[4].GetCardValueInt();
+
+            return score;
+        }
     }
 }
