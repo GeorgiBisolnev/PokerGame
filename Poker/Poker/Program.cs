@@ -11,31 +11,31 @@ namespace Poker
         static void Main(string[] args)
 
         {
-            //Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
-            //Card card7 = new Card();
-            //card1.SetCardValue(Value.King);
-            //card1.SetCardSuite(Suite.Hearts);
+            Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
+            Card card7 = new Card();
+            card1.SetCardValue(Value.six);
+            card1.SetCardSuite(Suite.Hearts);
 
-            //card2.SetCardValue(Value.ten);
-            //card2.SetCardSuite(Suite.Hearts);
+            card2.SetCardValue(Value.ten);
+            card2.SetCardSuite(Suite.Clubs);
 
-            //card3.SetCardValue(Value.ten);
-            //card3.SetCardSuite(Suite.Clubs);
+            card3.SetCardValue(Value.three);
+            card3.SetCardSuite(Suite.Hearts);
 
-            //card4.SetCardValue(Value.ten);
-            //card4.SetCardSuite(Suite.Diamonds);
+            card4.SetCardValue(Value.ten);
+            card4.SetCardSuite(Suite.Diamonds);
 
-            //card5.SetCardValue(Value.three);
-            //card5.SetCardSuite(Suite.Hearts);
+            card5.SetCardValue(Value.ten);
+            card5.SetCardSuite(Suite.Hearts);
 
-            //card6.SetCardValue(Value.two);
-            //card6.SetCardSuite(Suite.Hearts);
+            card6.SetCardValue(Value.nine);
+            card6.SetCardSuite(Suite.Diamonds);
 
-            //card7.SetCardValue(Value.two);
-            //card7.SetCardSuite(Suite.Diamonds);
-            //List<Card> testList = new List<Card> { card1, card2, card3, card4, card5, card6, card7 };
+            card7.SetCardValue(Value.three);
+            card7.SetCardSuite(Suite.Clubs);
+            List<Card> testList = new List<Card> { card1, card2, card3, card4, card5, card6, card7 };
 
-            //int test = FullHouse(testList);
+            double test = FullHouse(testList);
 
             //Console.BackgroundColor = ConsoleColor.DarkMagenta;
             //Deck deck = new Deck();
@@ -425,7 +425,7 @@ namespace Poker
                     int intThree = sortedCards[i].GetCardValueInt();
                     var sortedlist2 = sortedCards.Where(v => v.GetCardValueInt() != intThree).ToList();
 
-                    for (int j = 0; j < sortedlist2.Count-2; j++)
+                    for (int j = 0; j < sortedlist2.Count-1; j++)
                     {
                         if (sortedlist2[j].GetCardValueInt()== sortedlist2[j+1].GetCardValueInt())
                         {
