@@ -13,130 +13,36 @@ namespace Poker
         {
             Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
             Card card7 = new Card();
-            card1.SetCardValue(Value.six);
-            card1.SetCardSuite(Suite.Hearts);
+            card1.SetCardValue(Value.four);
+            card1.SetCardSuite(Suite.Clubs);
 
-            card2.SetCardValue(Value.ten);
-            card2.SetCardSuite(Suite.Clubs);
+            card2.SetCardValue(Value.Jack);
+            card2.SetCardSuite(Suite.Diamonds);
 
-            card3.SetCardValue(Value.three);
-            card3.SetCardSuite(Suite.Hearts);
+            card3.SetCardValue(Value.King);
+            card3.SetCardSuite(Suite.Spides);
 
-            card4.SetCardValue(Value.ten);
-            card4.SetCardSuite(Suite.Diamonds);
+            card4.SetCardValue(Value.Jack);
+            card4.SetCardSuite(Suite.Clubs);
 
-            card5.SetCardValue(Value.ten);
-            card5.SetCardSuite(Suite.Hearts);
+            card5.SetCardValue(Value.four);
+            card5.SetCardSuite(Suite.Spides);
 
-            card6.SetCardValue(Value.nine);
-            card6.SetCardSuite(Suite.Diamonds);
+            card6.SetCardValue(Value.six);
+            card6.SetCardSuite(Suite.Spides);
 
-            card7.SetCardValue(Value.three);
+            card7.SetCardValue(Value.four);
             card7.SetCardSuite(Suite.Clubs);
             List<Card> testList = new List<Card> { card1, card2, card3, card4, card5, card6, card7 };
 
             double test = FullHouse(testList);
-
-            //Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            //Deck deck = new Deck();
-
-            //deck.NewDeck();
-
-            //deck.ShuffleDeck();
-
-            //var player1 = new Player("Georgi");
-            //var player2 = new Player("Ivan");
-            //var table = new Player("Table");
-            //do
-            //{
-            //    player1.ClearHand();
-            //    table.ClearHand();
-            //    if (deck.GetNumberOfLeftCards()<7)
-            //    {
-            //        deck.NewDeck();
-            //        deck.ShuffleDeck();
-            //    }
-            //    for (int i = 0; i < 2; i++)
-            //    {
-            //        player1.addCard(deck.NextCard());
-
-            //    }
-            //    for (int i = 0; i < 5; i++)
-            //    {
-            //        table.addCard(deck.NextCard());
-
-            //    }
-            //    List<Card> concat = player1.GetPlayersCards().Concat(table.GetPlayersCards()).ToList();
-
-
-
-            //    Console.WriteLine(Evaluate(concat));
-            //        Console.ForegroundColor = ConsoleColor.Gray;
-            //        Console.WriteLine("------------------------");
-            //        player1.printColoredHand();
-            //        table.printColoredHand();
-            //        Console.WriteLine("------------------------");
-            //        Console.WriteLine();
-
-            //} while (true);
-
-            //player1.SortPlayerHand(); table.SortPlayerHand();
-            //Console.WriteLine(count);
-            //Console.WriteLine(player1.printHand() +"\n" + table.printHand());
-
-
-            //while (player1.GetNumberOfCards() < 5)
-            //{
-            //    Console.WriteLine("-------------------");
-            //    if (player1.GetNumberOfCards()==0)
-            //    {
-            //        for (int i = 0; i < 3; i++)
-            //        {
-            //            player1.addCard(deck.NextCard());                        
-            //            player2.addCard(deck.NextCard());
-            //            table.addCard(deck.NextCard());
-            //        }
-
-            //        Console.WriteLine(player1.printHand());
-            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-            //        Console.WriteLine(table.printHand(false)); 
-            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-            //        Console.WriteLine(player2.printHand());
-            //    }
-            //    else if (player1.GetNumberOfCards() == 3)
-            //    {
-            //        player1.addCard(deck.NextCard()); 
-            //        player2.addCard(deck.NextCard()); 
-            //        table.addCard(deck.NextCard());
-
-            //        Console.WriteLine(player1.printHand());
-            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-            //        Console.WriteLine(table.printHand(false));
-            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-            //        Console.WriteLine(player2.printHand());
-            //    } else
-            //    {
-            //        player1.addCard(deck.NextCard());
-            //        player2.addCard(deck.NextCard());
-            //        table.addCard(deck.NextCard());
-
-            //        Console.WriteLine(player1.printHand());
-            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-            //        Console.WriteLine(table.printHand(false));
-            //        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*");
-            //        Console.WriteLine(player2.printHand());
-            //    }
-            //    Console.WriteLine("Pres any key to continue ...");
-            //    Console.ReadKey();
-            //    Console.Clear();
-            //}
 
             Console.Write("Number of players= ");
             int numberOfPlaeyrs = int.Parse(Console.ReadLine());
 
             Dictionary<Player,string []> players = new Dictionary<Player, string[]>();
 
-            for (int i = 0; i < numberOfPlaeyrs; i++)
+            for (int i = 1; i <= numberOfPlaeyrs; i++)
             {
                 Console.Write($"Player {i} name is - > ");
                 Player curPlayer = new Player(Console.ReadLine());
@@ -165,15 +71,11 @@ namespace Poker
                 {
                     foreach (var player in players)
                     {
-                        Card curCard = new Card();
-                        curCard = deck.NextCard();
-                        player.Key.addCard(curCard);
+                        player.Key.addCard(deck.NextCard());
                     }
                     foreach (var player in players)
                     {
-                        Card curCard = new Card();
-                        curCard = deck.NextCard();
-                        player.Key.addCard(curCard);
+                        player.Key.addCard(deck.NextCard());
                     }
                 }
                 
@@ -418,9 +320,10 @@ namespace Poker
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
-            for (int i = 0; i < list.Count-3; i++)
+            for (int i = 0; i < list.Count-2; i++)
             {
-                if (sortedCards[i].GetCardValueInt()== sortedCards[i+1].GetCardValueInt()&& sortedCards[i].GetCardValueInt()== sortedCards[i+2].GetCardValueInt())
+                if (sortedCards[i].GetCardValueInt()== sortedCards[i+1].GetCardValueInt()&& 
+                    sortedCards[i].GetCardValueInt()== sortedCards[i+2].GetCardValueInt())
                 {
                     int intThree = sortedCards[i].GetCardValueInt();
                     var sortedlist2 = sortedCards.Where(v => v.GetCardValueInt() != intThree).ToList();
@@ -446,8 +349,10 @@ namespace Poker
 
             for (int i = 0; i < 3; i++)
             {
-                if (sortedCards[i].GetCardSuite() == sortedCards[i+1].GetCardSuite() && sortedCards[i].GetCardSuite() == sortedCards[i+2].GetCardSuite() &&
-                sortedCards[i].GetCardSuite() == sortedCards[i+3].GetCardSuite() && sortedCards[i].GetCardSuite() == sortedCards[i+4].GetCardSuite())
+                if (sortedCards[i].GetCardSuite() == sortedCards[i+1].GetCardSuite() && 
+                    sortedCards[i].GetCardSuite() == sortedCards[i+2].GetCardSuite() &&
+                sortedCards[i].GetCardSuite() == sortedCards[i+3].GetCardSuite() &&
+                sortedCards[i].GetCardSuite() == sortedCards[i+4].GetCardSuite())
                 {
                     score = 50000 + sortedCards[i].GetCardValueInt();
                     return score;
@@ -465,8 +370,10 @@ namespace Poker
 
             for (int i = 0; i < 3; i++)
             {
-                if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt()+1 && sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt()+2 &&
-                sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt()+3 && sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt()+4)
+                if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt()+1 && 
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt()+2 &&
+                sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt()+3 &&
+                sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt()+4)
                 {
                     score = 40000 + sortedCards[i].GetCardValueInt();
                     return score;
@@ -484,7 +391,8 @@ namespace Poker
 
             for (int i = 0; i < 5; i++)
             {
-                if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt() && sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt())
+                if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt() &&
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt())
                 {
                     int intThreeOfAKind = sortedCards[i].GetCardValueInt();
                     score = 30000 + sortedCards[i].GetCardValueInt()*3*30;
