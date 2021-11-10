@@ -11,32 +11,32 @@ namespace Poker
         static void Main(string[] args)
 
         {
-            //Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
-            //Card card7 = new Card();
-            //card1.SetCardValue(Value.four);
-            //card1.SetCardSuite(Suite.Clubs);
+            Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
+            Card card7 = new Card();
+            card1.SetCardValue(Value.four);
+            card1.SetCardSuite(Suite.Clubs);
 
-            //card2.SetCardValue(Value.Jack);
-            //card2.SetCardSuite(Suite.Diamonds);
+            card2.SetCardValue(Value.five);
+            card2.SetCardSuite(Suite.Clubs);
 
-            //card3.SetCardValue(Value.King);
-            //card3.SetCardSuite(Suite.Spides);
+            card3.SetCardValue(Value.three);
+            card3.SetCardSuite(Suite.Clubs);
 
-            //card4.SetCardValue(Value.Jack);
-            //card4.SetCardSuite(Suite.Clubs);
+            card4.SetCardValue(Value.two);
+            card4.SetCardSuite(Suite.Clubs);
 
-            //card5.SetCardValue(Value.four);
-            //card5.SetCardSuite(Suite.Spides);
+            card5.SetCardValue(Value.four);
+            card5.SetCardSuite(Suite.Spides);
 
-            //card6.SetCardValue(Value.six);
-            //card6.SetCardSuite(Suite.Spides);
+            card6.SetCardValue(Value.six);
+            card6.SetCardSuite(Suite.Spides);
 
-            //card7.SetCardValue(Value.four);
-            //card7.SetCardSuite(Suite.Clubs);
-            //List<Card> testList = new List<Card> { card1, card2, card3, card4, card5 };
+            card7.SetCardValue(Value.Ace);
+            card7.SetCardSuite(Suite.Clubs);
+            List<Card> testList = new List<Card> { card1, card2, card3, card4, card5,card6,card7 };
 
             //double test = FullHouse(testList);
-            //double test1 = StraightFlush(testList);
+            double test1 = StraightFlush(testList);
 
             Console.Write("Number of players= ");
             int numberOfPlaeyrs = int.Parse(Console.ReadLine());
@@ -260,10 +260,17 @@ namespace Poker
                     sortedCards[i].GetCardSuite() == sortedCards[i+2].GetCardSuite() &&
                     sortedCards[i].GetCardSuite() == sortedCards[i+3].GetCardSuite() &&
                     sortedCards[i].GetCardSuite() == sortedCards[i+4].GetCardSuite() &&
+                    ((
                     sortedCards[i].GetCardValueInt() == sortedCards[i+1].GetCardValueInt() + 1 &&
                     sortedCards[i].GetCardValueInt() == sortedCards[i+2].GetCardValueInt() + 2 &&
                     sortedCards[i].GetCardValueInt() == sortedCards[i+3].GetCardValueInt() + 3 &&
-                    sortedCards[i].GetCardValueInt() == sortedCards[i+4].GetCardValueInt() + 4
+                    sortedCards[i].GetCardValueInt() == sortedCards[i+4].GetCardValueInt() + 4 ) ||
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt() + 9 &&
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt() + 10 &&
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt() + 11 &&
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt() + 12 &&
+                    sortedCards[i].GetCardValueInt()==14)
+
                     )
                 {
                     return score + sortedCards[i].GetCardValueInt();
