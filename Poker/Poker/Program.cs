@@ -16,7 +16,7 @@ namespace Poker
             //card1.SetCardValue(Value.Ace);
             //card1.SetCardSuite(Suite.Clubs);
             
-            //card2.SetCardValue(Value.two);
+            //card2.SetCardValue(Value.King);
             //card2.SetCardSuite(Suite.Clubs);
             
             //card3.SetCardValue(Value.three);
@@ -25,17 +25,17 @@ namespace Poker
             //card4.SetCardValue(Value.four);
             //card4.SetCardSuite(Suite.Clubs);
             
-            //card5.SetCardValue(Value.eight);
-            //card5.SetCardSuite(Suite.Spides);
+            //card5.SetCardValue(Value.two);
+            //card5.SetCardSuite(Suite.Clubs);
             
-            //card6.SetCardValue(Value.six);
+            //card6.SetCardValue(Value.seven);
             //card6.SetCardSuite(Suite.Spides);
             
             //card7.SetCardValue(Value.five);
             //card7.SetCardSuite(Suite.Clubs);
             //List<Card> testList = new List<Card> { card1, card2, card3, card4, card5,card6, card7 };
             
-            //double test = FullHouse(testList);
+            //double test = Straight(testList);
             //double test1 = StraightFlush(testList);
 
             Console.Write("Number of players= ");
@@ -260,22 +260,34 @@ namespace Poker
                     sortedCards[i].GetCardSuite() == sortedCards[i+2].GetCardSuite() &&
                     sortedCards[i].GetCardSuite() == sortedCards[i+3].GetCardSuite() &&
                     sortedCards[i].GetCardSuite() == sortedCards[i+4].GetCardSuite() &&
-                    ((
                     sortedCards[i].GetCardValueInt() == sortedCards[i+1].GetCardValueInt() + 1 &&
                     sortedCards[i].GetCardValueInt() == sortedCards[i+2].GetCardValueInt() + 2 &&
                     sortedCards[i].GetCardValueInt() == sortedCards[i+3].GetCardValueInt() + 3 &&
-                    sortedCards[i].GetCardValueInt() == sortedCards[i+4].GetCardValueInt() + 4 ) ||
-                    sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt() + 9 &&
-                    sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt() + 10 &&
-                    sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt() + 11 &&
-                    sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt() + 12 &&
-                    sortedCards[i].GetCardValueInt()==14)
-
+                    sortedCards[i].GetCardValueInt() == sortedCards[i+4].GetCardValueInt() + 4 
                     )
                 {
                     return score + sortedCards[i+4].GetCardValueInt();
                 }
-            }          
+            }
+
+            sortedCards = list.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => x.GetCardValueIntAceReduced()).ToList();
+
+            for (int i = 0; i <= list.Count - 5; i++)
+            {
+                if (sortedCards[i].GetCardSuite() == sortedCards[i + 1].GetCardSuite() &&
+                    sortedCards[i].GetCardSuite() == sortedCards[i + 2].GetCardSuite() &&
+                    sortedCards[i].GetCardSuite() == sortedCards[i + 3].GetCardSuite() &&
+                    sortedCards[i].GetCardSuite() == sortedCards[i + 4].GetCardSuite() &&
+                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 1].GetCardValueIntAceReduced() + 1 &&
+                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 2].GetCardValueIntAceReduced() + 2 &&
+                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 3].GetCardValueIntAceReduced() + 3 &&
+                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 4].GetCardValueIntAceReduced() + 4
+                    )
+                {
+                    return score + sortedCards[i + 4].GetCardValueIntAceReduced();
+                }
+            }
+
             return score;
         }
 
@@ -354,17 +366,23 @@ namespace Poker
                 if ((sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt()+1 && 
                     sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt()+2 &&
                 sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt()+3 &&
-                sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt()+4)
-                ||
-                (
-                    sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt() + 9 &&
-                    sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt() + 10 &&
-                    sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt() + 11 &&
-                    sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt() + 12 &&
-                    sortedCards[i].GetCardValueInt() == 14
-                    ))
+                sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt()+4))
                 {
                     score = 40000 + sortedCards[i].GetCardValueInt();
+                    return score;
+                }
+            }
+
+            sortedCards = list.OrderByDescending(x => x.GetCardValueIntAceReduced()).ToList();
+
+            for (int i = 0; i <= sortedCards.Count - 5; i++)
+            {
+                if ((sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 1].GetCardValueIntAceReduced() + 1 &&
+                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 2].GetCardValueIntAceReduced() + 2 &&
+                sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 3].GetCardValueIntAceReduced() + 3 &&
+                sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 4].GetCardValueIntAceReduced() + 4))
+                {
+                    score = 40000 + sortedCards[i].GetCardValueIntAceReduced();
                     return score;
                 }
             }

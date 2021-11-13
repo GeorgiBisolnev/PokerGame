@@ -33,6 +33,18 @@ namespace Poker
         {
             return (int)CardValue;
         }
+        public int GetCardValueIntAceReduced()
+        {
+            if ((int)CardValue!=14)
+            {
+                return (int)CardValue;
+            } 
+            else
+            {
+                 return (int)CardValue - 13;
+            }
+
+        }
 
         public void SetCardValue(Value v)
         {
