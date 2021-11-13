@@ -269,7 +269,7 @@ namespace Poker
                     return score + sortedCards[i+4].GetCardValueInt();
                 }
             }
-
+            //Check for baby StraightFlush starting with ACE
             sortedCards = list.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => x.GetCardValueIntAceReduced()).ToList();
 
             for (int i = 0; i <= list.Count - 5; i++)
@@ -372,7 +372,7 @@ namespace Poker
                     return score;
                 }
             }
-
+            //Check for baby Straight starting with ACE
             sortedCards = list.OrderByDescending(x => x.GetCardValueIntAceReduced()).ToList();
 
             for (int i = 0; i <= sortedCards.Count - 5; i++)
