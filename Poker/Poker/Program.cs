@@ -11,32 +11,32 @@ namespace Poker
         static void Main(string[] args)
 
         {
-            Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
-            Card card7 = new Card();
-            card1.SetCardValue(Value.nine);
-            card1.SetCardSuite(Suite.Clubs);
+            //Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
+            //Card card7 = new Card();
+            //card1.SetCardValue(Value.Ace);
+            //card1.SetCardSuite(Suite.Clubs);
             
-            card2.SetCardValue(Value.Jack);
-            card2.SetCardSuite(Suite.Clubs);
+            //card2.SetCardValue(Value.two);
+            //card2.SetCardSuite(Suite.Clubs);
             
-            card3.SetCardValue(Value.Queen);
-            card3.SetCardSuite(Suite.Clubs);
+            //card3.SetCardValue(Value.three);
+            //card3.SetCardSuite(Suite.Clubs);
             
-            card4.SetCardValue(Value.King);
-            card4.SetCardSuite(Suite.Clubs);
+            //card4.SetCardValue(Value.four);
+            //card4.SetCardSuite(Suite.Clubs);
             
-            card5.SetCardValue(Value.eight);
-            card5.SetCardSuite(Suite.Spides);
+            //card5.SetCardValue(Value.eight);
+            //card5.SetCardSuite(Suite.Spides);
             
-            card6.SetCardValue(Value.six);
-            card6.SetCardSuite(Suite.Spides);
+            //card6.SetCardValue(Value.six);
+            //card6.SetCardSuite(Suite.Spides);
             
-            card7.SetCardValue(Value.ten);
-            card7.SetCardSuite(Suite.Clubs);
-            List<Card> testList = new List<Card> { card1, card2, card3, card4, card5,card6,card7 };
+            //card7.SetCardValue(Value.five);
+            //card7.SetCardSuite(Suite.Clubs);
+            //List<Card> testList = new List<Card> { card1, card2, card3, card4, card5,card6, card7 };
             
-            double test = FullHouse(testList);
-            double test1 = StraightFlush(testList);
+            //double test = FullHouse(testList);
+            //double test1 = StraightFlush(testList);
 
             Console.Write("Number of players= ");
             int numberOfPlaeyrs = int.Parse(Console.ReadLine());
@@ -204,7 +204,7 @@ namespace Poker
             returnString= ($"Evaluation Score: {evaluationScore}");
                 if (evaluationScore > 80000)
                 {
-                    if (evaluationScore == 80080)
+                    if (evaluationScore == 8010)
                     {
                         returnString=("--Royal Fluash!--");
                     }
@@ -273,7 +273,7 @@ namespace Poker
 
                     )
                 {
-                    return score + sortedCards[i].GetCardValueInt()*5 + sortedCards[i+4].GetCardValueInt();
+                    return score + sortedCards[i+4].GetCardValueInt();
                 }
             }          
             return score;
@@ -351,10 +351,18 @@ namespace Poker
 
             for (int i = 0; i <= sortedCards.Count - 5; i++)
             {
-                if (sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt()+1 && 
+                if ((sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt()+1 && 
                     sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt()+2 &&
                 sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt()+3 &&
                 sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt()+4)
+                ||
+                (
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 1].GetCardValueInt() + 9 &&
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 2].GetCardValueInt() + 10 &&
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 3].GetCardValueInt() + 11 &&
+                    sortedCards[i].GetCardValueInt() == sortedCards[i + 4].GetCardValueInt() + 12 &&
+                    sortedCards[i].GetCardValueInt() == 14
+                    ))
                 {
                     score = 40000 + sortedCards[i].GetCardValueInt();
                     return score;
