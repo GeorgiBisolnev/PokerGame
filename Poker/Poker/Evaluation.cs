@@ -54,9 +54,9 @@ namespace Poker
 
                 if (HandEvaluation > 8)
                 {
-                    if (HandEvaluation == 8.01)
+                    if (HandEvaluation == 8.001)
                     {
-                        returnString = ("* Royal Fluash! *");
+                        returnString = ("Royal Fluash!");
                     }
                     else
                     {
@@ -99,7 +99,7 @@ namespace Poker
         }
         private static int StraightFlush(List<Card> list)
         {
-            int score = 0;
+            int score = 80000;
             var sortedCards = list.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => x.GetCardValueInt()).ToList();
 
             for (int i = 0; i <= list.Count - 5; i++)
@@ -196,8 +196,8 @@ namespace Poker
                 sortedCards[i].GetCardSuite() == sortedCards[i + 3].GetCardSuite() &&
                 sortedCards[i].GetCardSuite() == sortedCards[i + 4].GetCardSuite())
                 {
-                    score = 50000 + sortedCards[i].GetCardValueInt()+sortedCards[i+1].GetCardValueInt()+ sortedCards[i+2].GetCardValueInt()
-                        + sortedCards[i+3].GetCardValueInt()+ sortedCards[i+4].GetCardValueInt();
+                    score = 50000 + sortedCards[i].GetCardValueInt()*15+sortedCards[i+1].GetCardValueInt()*14+ sortedCards[i+2].GetCardValueInt()*13
+                        + sortedCards[i+3].GetCardValueInt()*12+ sortedCards[i+4].GetCardValueInt();
                     return score;
                 }
             }

@@ -42,7 +42,7 @@ namespace Poker
             //double test1 = Evaluation.HandEvaluation;
             //string pokerhand = Evaluation.PokerHand;
 
-            
+
             Console.Write("Number of players= ");
             int numberOfPlaeyrs = int.Parse(Console.ReadLine());
 
@@ -107,8 +107,7 @@ namespace Poker
                     Card curCard = new Card();
                     curCard = deck.NextCard();
                     table.addCard(curCard);
-                }
-                Console.Clear();                
+                }                           
                 Console.WriteLine("--------------------------------------------------------------");                
                 string playerStr= "Player name", handStr="Players hand", evaluationStr="Evaluation";
                 Console.WriteLine($"{playerStr,15} |{ handStr,15 }   |   {evaluationStr,14}   ");
@@ -141,7 +140,7 @@ namespace Poker
                         {
                             if (table.GetNumberOfCards() == 5)
                             {
-                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.ForegroundColor = ConsoleColor.Green;                                
                                 Console.WriteLine($"{player.Key.Name,15} | {player.Key.printHand(),15}  |{player.Value[0],15}  |{player.Value[1],7}  - Winner hand");
                                 Console.ForegroundColor = ConsoleColor.Gray;
                             }
@@ -159,13 +158,13 @@ namespace Poker
                 }
                 Console.WriteLine("--------------------------------------------------------------");
                 Console.WriteLine();
-                Console.WriteLine("--- Table cards ---");
+                Console.WriteLine("---  Table cards  ---");
                 Console.WriteLine(table.printHand());
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("Press any kay to continue ...");
-            Console.ReadKey();
-            Console.Clear();
+                Console.ReadKey();
+                Console.Clear();
             } while (true);
         }        
     }
