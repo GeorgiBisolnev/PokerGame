@@ -54,17 +54,17 @@ namespace Poker
                 Player curPlayer = new Player(Console.ReadLine());
                 players.Add(curPlayer,new string[2]);
             }
-            Deck deck = new Deck(); deck.NewDeck(); deck.ShuffleDeck();
+            Deck deck = new Deck();
             Player table = new Player("Table");
+
             do
             {
                 players = players.OrderBy(x => x.Key.Name).ToDictionary(x => x.Key, x => x.Value);
-                //if (deck.GetNumberOfLeftCards()<players.Count*2+5)
-                //{
-                    deck.NewDeck(); deck.ShuffleDeck();
-                //}
+
                 if (table.GetNumberOfCards()==5)
                 {
+                    deck.NewDeck(); 
+                    deck.ShuffleDeck();
                     table.ClearHand();
                     foreach (var player in players)
                     {

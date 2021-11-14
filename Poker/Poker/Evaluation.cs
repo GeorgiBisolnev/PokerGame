@@ -9,8 +9,8 @@ namespace Poker
     {
         private double handEvaluation;
         private string pokerHand;
-        public double HandEvaluation { get=> handEvaluation / 10000.0; set { handEvaluation = value; } }
-        public string PokerHand { get=>pokerHand; set { pokerHand = value; } }
+        public double HandEvaluation { get=> handEvaluation / 10000.0; private set { handEvaluation = value; } }
+        public string PokerHand { get=>pokerHand; private set {  pokerHand = value; } }
         public void Evaluate(List<Card> list)
         {
             double evaluatonScore = 0;
@@ -96,12 +96,10 @@ namespace Poker
                     returnString = ("High card");
                 }
             PokerHand = returnString;
-
-
         }
         private static int StraightFlush(List<Card> list)
         {
-            int score = 80000;
+            int score = 0;
             var sortedCards = list.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => x.GetCardValueInt()).ToList();
 
             for (int i = 0; i <= list.Count - 5; i++)
@@ -120,28 +118,30 @@ namespace Poker
                 }
             }
             //Check for baby StraightFlush starting with ACE
-            sortedCards = list.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => x.GetCardValueIntAceReduced()).ToList();
-
-            for (int i = 0; i <= list.Count - 5; i++)
+            if (list.FirstOrDefault(x=>x.GetCardValueInt()==14)!=null)
             {
-                if (sortedCards[i].GetCardSuite() == sortedCards[i + 1].GetCardSuite() &&
-                    sortedCards[i].GetCardSuite() == sortedCards[i + 2].GetCardSuite() &&
-                    sortedCards[i].GetCardSuite() == sortedCards[i + 3].GetCardSuite() &&
-                    sortedCards[i].GetCardSuite() == sortedCards[i + 4].GetCardSuite() &&
-                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 1].GetCardValueIntAceReduced() + 1 &&
-                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 2].GetCardValueIntAceReduced() + 2 &&
-                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 3].GetCardValueIntAceReduced() + 3 &&
-                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 4].GetCardValueIntAceReduced() + 4
-                    )
+                sortedCards = list.OrderBy(x => (int)x.GetCardSuite()).ThenByDescending(x => x.GetCardValueIntAceReduced()).ToList();
+
+                for (int i = 0; i <= list.Count - 5; i++)
                 {
-                    return score + sortedCards[i + 4].GetCardValueIntAceReduced();
+                    if (sortedCards[i].GetCardSuite() == sortedCards[i + 1].GetCardSuite() &&
+                        sortedCards[i].GetCardSuite() == sortedCards[i + 2].GetCardSuite() &&
+                        sortedCards[i].GetCardSuite() == sortedCards[i + 3].GetCardSuite() &&
+                        sortedCards[i].GetCardSuite() == sortedCards[i + 4].GetCardSuite() &&
+                        sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 1].GetCardValueIntAceReduced() + 1 &&
+                        sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 2].GetCardValueIntAceReduced() + 2 &&
+                        sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 3].GetCardValueIntAceReduced() + 3 &&
+                        sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 4].GetCardValueIntAceReduced() + 4
+                        )
+                    {
+                        return score + sortedCards[i + 4].GetCardValueIntAceReduced();
+                    }
                 }
             }
-
             return score;
         }
 
-        public static int FourOfAKind(List<Card> list)
+        private static int FourOfAKind(List<Card> list)
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
@@ -159,7 +159,7 @@ namespace Poker
             return score;
         }
 
-        public static int FullHouse(List<Card> list)
+        private static int FullHouse(List<Card> list)
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
@@ -181,11 +181,10 @@ namespace Poker
                     }
                 }
             }
-
             return score;
         }
 
-        public static int Flush(List<Card> list)
+        private static int Flush(List<Card> list)
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardSuite()).ThenByDescending(v => v.GetCardValueInt()).ToList();
@@ -197,16 +196,15 @@ namespace Poker
                 sortedCards[i].GetCardSuite() == sortedCards[i + 3].GetCardSuite() &&
                 sortedCards[i].GetCardSuite() == sortedCards[i + 4].GetCardSuite())
                 {
-                    score = 50000 + sortedCards[i].GetCardValueInt();
+                    score = 50000 + sortedCards[i].GetCardValueInt()+sortedCards[i+1].GetCardValueInt()+ sortedCards[i+2].GetCardValueInt()
+                        + sortedCards[i+3].GetCardValueInt()+ sortedCards[i+4].GetCardValueInt();
                     return score;
                 }
             }
-
-
             return score;
         }
 
-        public static int Straight(List<Card> list)
+        private static int Straight(List<Card> list)
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
@@ -223,25 +221,26 @@ namespace Poker
                 }
             }
             //Check for baby Straight starting with ACE
-            sortedCards = list.OrderByDescending(x => x.GetCardValueIntAceReduced()).ToList();
-
-            for (int i = 0; i <= sortedCards.Count - 5; i++)
+            if (list.FirstOrDefault(x => x.GetCardValueInt() == 14) != null)
             {
-                if ((sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 1].GetCardValueIntAceReduced() + 1 &&
-                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 2].GetCardValueIntAceReduced() + 2 &&
-                sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 3].GetCardValueIntAceReduced() + 3 &&
-                sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 4].GetCardValueIntAceReduced() + 4))
+                sortedCards = list.OrderByDescending(x => x.GetCardValueIntAceReduced()).ToList();
+
+                for (int i = 0; i <= sortedCards.Count - 5; i++)
                 {
-                    score = 40000 + sortedCards[i].GetCardValueIntAceReduced();
-                    return score;
+                    if ((sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 1].GetCardValueIntAceReduced() + 1 &&
+                        sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 2].GetCardValueIntAceReduced() + 2 &&
+                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 3].GetCardValueIntAceReduced() + 3 &&
+                    sortedCards[i].GetCardValueIntAceReduced() == sortedCards[i + 4].GetCardValueIntAceReduced() + 4))
+                    {
+                        score = 40000 + sortedCards[i].GetCardValueIntAceReduced();
+                        return score;
+                    }
                 }
-            }
-
-
+            }           
             return score;
         }
 
-        public static int ThreeOfAKind(List<Card> list)
+        private static int ThreeOfAKind(List<Card> list)
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
@@ -258,12 +257,10 @@ namespace Poker
                     return score;
                 }
             }
-
-
             return score;
         }
 
-        public static int TwoPair(List<Card> list)
+        private static int TwoPair(List<Card> list)
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
@@ -287,12 +284,10 @@ namespace Poker
                     }
                 }
             }
-
-
             return score;
         }
 
-        public static int OnePair(List<Card> list)
+        private static int OnePair(List<Card> list)
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
@@ -314,11 +309,9 @@ namespace Poker
                     return score;
                 }
             }
-
-
             return score;
         }
-        public static int HighCard(List<Card> list)
+        private static int HighCard(List<Card> list)
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
