@@ -37,9 +37,7 @@ namespace Poker
             card7.SetCardSuite(Suite.Clubs);
             List<Card> testList = new List<Card> { card1, card2, card3, card4, card5,card6, card7 };
 
-            double testValue = Evaluation.OnePair(testList);
-
-
+            Evaluation.Evaluate(testList);
             string pokerhand = Evaluation.PokerHand;
 
 
@@ -72,8 +70,6 @@ namespace Poker
                         player.Key.ClearHand();
                     }
                 }
-
-
                 if (table.GetNumberOfCards() == 0)
                 {
                     foreach (var player in players)
@@ -123,9 +119,6 @@ namespace Poker
                 
                 foreach (var player in players)
                 {
-                        //List<Card> conc = player.Key.GetPlayersCards().Concat(table.GetPlayersCards()).ToList();
-                        //string result = Evaluation.PokerHand;
-                        //double evaluationScore = Evaluation.HandEvaluation;
                         if (double.Parse(player.Value[1])== maxEvaluationResult)
                         {
                             if (table.GetNumberOfCards() == 5)
