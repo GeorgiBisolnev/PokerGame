@@ -13,34 +13,34 @@ namespace Poker
         {
             Evaluation Evaluation = new Evaluation();
 
-            //Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
-            //Card card7 = new Card();
-            //card1.SetCardValue(Value.Ace);
-            //card1.SetCardSuite(Suite.Clubs);
+            Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
+            Card card7 = new Card();
+            card1.SetCardValue(Value.two);
+            card1.SetCardSuite(Suite.Clubs);
 
-            //card2.SetCardValue(Value.King);
-            //card2.SetCardSuite(Suite.Clubs);
+            card2.SetCardValue(Value.Ace);
+            card2.SetCardSuite(Suite.Clubs);
 
-            //card3.SetCardValue(Value.Queen);
-            //card3.SetCardSuite(Suite.Clubs);
+            card3.SetCardValue(Value.three);
+            card3.SetCardSuite(Suite.Clubs);
 
-            //card4.SetCardValue(Value.Jack);
-            //card4.SetCardSuite(Suite.Clubs);
+            card4.SetCardValue(Value.two);
+            card4.SetCardSuite(Suite.Clubs);
 
-            //card5.SetCardValue(Value.ten);
-            //card5.SetCardSuite(Suite.Clubs);
+            card5.SetCardValue(Value.five);
+            card5.SetCardSuite(Suite.Clubs);
 
-            //card6.SetCardValue(Value.seven);
-            //card6.SetCardSuite(Suite.Spides);
+            card6.SetCardValue(Value.four);
+            card6.SetCardSuite(Suite.Spides);
 
-            //card7.SetCardValue(Value.five);
-            //card7.SetCardSuite(Suite.Clubs);
-            //List<Card> testList = new List<Card> { card1, card2, card3, card4, card5,card6, card7 };
+            card7.SetCardValue(Value.nine);
+            card7.SetCardSuite(Suite.Clubs);
+            List<Card> testList = new List<Card> { card1, card2, card3, card4, card5,card6, card7 };
 
-            ////double test = Straight(testList);
-            //Evaluation.Evaluate(testList);
-            //double test1 = Evaluation.HandEvaluation;
-            //string pokerhand = Evaluation.PokerHand;
+            double testValue = Evaluation.OnePair(testList);
+
+
+            string pokerhand = Evaluation.PokerHand;
 
 
             Console.Write("Number of players= ");
@@ -54,7 +54,8 @@ namespace Poker
                 Player curPlayer = new Player(Console.ReadLine());
                 players.Add(curPlayer,new string[2]);
             }
-            Deck deck = new Deck();
+            Deck deck = new Deck(); deck.NewDeck();
+            deck.ShuffleDeck();
             Player table = new Player("Table");
 
             do
@@ -83,26 +84,15 @@ namespace Poker
                     {
                         player.Key.addCard(deck.NextCard());
                     }
-                }
-                
-
-                if (table.GetPlayersCards().Count==0)
-                {
                     for (int i = 0; i < 3; i++)
                     {
                         Card curCard = new Card();
                         curCard = deck.NextCard();
                         table.addCard(curCard);
                     }
-                    deck.NextCard();
-                }
-                else if (table.GetPlayersCards().Count == 0)
-                {
-                    Card curCard = new Card();
-                    curCard = deck.NextCard();
-                    table.addCard(curCard);
-                    deck.NextCard();
-                } else
+                    deck.NextCard();                
+                } 
+                else
                 {
                     Card curCard = new Card();
                     curCard = deck.NextCard();
@@ -133,9 +123,9 @@ namespace Poker
                 
                 foreach (var player in players)
                 {
-                        List<Card> conc = player.Key.GetPlayersCards().Concat(table.GetPlayersCards()).ToList();
-                        string result = Evaluation.PokerHand;
-                        double evaluationScore = Evaluation.HandEvaluation;
+                        //List<Card> conc = player.Key.GetPlayersCards().Concat(table.GetPlayersCards()).ToList();
+                        //string result = Evaluation.PokerHand;
+                        //double evaluationScore = Evaluation.HandEvaluation;
                         if (double.Parse(player.Value[1])== maxEvaluationResult)
                         {
                             if (table.GetNumberOfCards() == 5)

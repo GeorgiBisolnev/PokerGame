@@ -39,7 +39,7 @@ namespace Poker
             Random rnd = new Random();
             Card curCard = new Card();
 
-            for (int i = 0; i < 1200; i++)
+            for (int i = 0; i < 2200; i++)
             {
                 int randomint = rnd.Next(deck.Count);
                 curCard = deck[randomint];
