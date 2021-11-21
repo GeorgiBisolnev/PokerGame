@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace Poker
 {
     public class Program
@@ -11,35 +10,7 @@ namespace Poker
         static void Main(string[] args)
 
         {
-            Evaluation Evaluation = new Evaluation();
-
-            Card card1 = new Card(); Card card2 = new Card(); Card card3 = new Card(); Card card4 = new Card(); Card card5 = new Card(); Card card6 = new Card();
-            Card card7 = new Card();
-            card1.SetCardValue(Value.two);
-            card1.SetCardSuite(Suite.Clubs);
-
-            card2.SetCardValue(Value.Ace);
-            card2.SetCardSuite(Suite.Clubs);
-
-            card3.SetCardValue(Value.three);
-            card3.SetCardSuite(Suite.Clubs);
-
-            card4.SetCardValue(Value.two);
-            card4.SetCardSuite(Suite.Clubs);
-
-            card5.SetCardValue(Value.five);
-            card5.SetCardSuite(Suite.Clubs);
-
-            card6.SetCardValue(Value.four);
-            card6.SetCardSuite(Suite.Spides);
-
-            card7.SetCardValue(Value.nine);
-            card7.SetCardSuite(Suite.Clubs);
-            List<Card> testList = new List<Card> { card1, card2, card3, card4, card5,card6, card7 };
-
-            Evaluation.Evaluate(testList);
-            string pokerhand = Evaluation.PokerHand;
-
+            Evaluation Evaluation = new Poker.Evaluation();
 
             Console.Write("Number of players= ");
             int numberOfPlaeyrs = int.Parse(Console.ReadLine());

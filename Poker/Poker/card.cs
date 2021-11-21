@@ -17,6 +17,16 @@ namespace Poker
     }
     public class Card
     {
+        public Card()
+        {
+
+        }
+        public Card(Suite cardSuite, Value cardValue)
+        {
+            CardSuite = cardSuite;
+            CardValue = cardValue;
+        }
+
         private Suite CardSuite { get; set; }
         private Value CardValue { get; set; }
 

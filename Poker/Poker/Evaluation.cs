@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Poker
 {
-    class Evaluation
+    public class Evaluation
     {
         private double handEvaluation;
         private string pokerHand;
