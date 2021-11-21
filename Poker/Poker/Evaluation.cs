@@ -207,6 +207,18 @@ namespace Poker
         {
             int score = 0;
             var sortedCards = list.OrderByDescending(x => x.GetCardValueInt()).ToList();
+            for (int i = 0; i < sortedCards.Count-1; i++)
+            {
+                if (sortedCards[i].GetCardValueInt()== sortedCards[i+1].GetCardValueInt())
+                {
+                    sortedCards.RemoveAt(i + 1);
+                }
+            }
+
+            if (sortedCards.Count<5)
+            {
+                return 0;
+            }
 
             for (int i = 0; i <= sortedCards.Count - 5; i++)
             {

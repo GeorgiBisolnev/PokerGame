@@ -41,6 +41,19 @@ namespace PokerHandsTest
             Evaluation.Evaluate(testList);
             Assert.Greater(Evaluation.HandEvaluation, 8);
             Assert.AreNotEqual(Evaluation.HandEvaluation, 8.0001);
+
+            card1 = new Card(Suite.Clubs, Value.Ace);
+            card2 = new Card(Suite.Hearts, Value.King);
+            card3 = new Card(Suite.Diamonds, Value.Ace);
+            card4 = new Card(Suite.Clubs, Value.two);
+            card5 = new Card(Suite.Clubs, Value.three);
+            card6 = new Card(Suite.Clubs, Value.four);
+            card7 = new Card(Suite.Clubs, Value.five);
+            testList = new List<Card> { card1, card2, card3, card4, card5, card6, card7 };
+
+            Evaluation.Evaluate(testList);
+            Assert.Greater(Evaluation.HandEvaluation, 8);
+            Assert.AreNotEqual(Evaluation.HandEvaluation, 8.0001);
         }
         [Test]
         public void FlushHandTest()
@@ -103,12 +116,50 @@ namespace PokerHandsTest
 
             var card1 = new Card(Suite.Clubs, Value.nine);
             var card2 = new Card(Suite.Hearts, Value.King);
-            var card3 = new Card(Suite.Diamonds, Value.two);
+            var card3 = new Card(Suite.Diamonds, Value.four);
             var card4 = new Card(Suite.Clubs, Value.Jack);
             var card5 = new Card(Suite.Spides, Value.ten);
             var card6 = new Card(Suite.Clubs, Value.Queen);
             var card7 = new Card(Suite.Clubs, Value.King);
             List<Card> testList = new List<Card> { card1, card2, card3, card4, card5, card6, card7 };
+
+            Evaluation.Evaluate(testList);
+            Assert.Greater(Evaluation.HandEvaluation, 4);
+            Assert.Less(Evaluation.HandEvaluation, 5);
+
+            card1 = new Card(Suite.Clubs, Value.nine);
+            card2 = new Card(Suite.Hearts, Value.King);
+            card3 = new Card(Suite.Diamonds, Value.Queen);
+            card4 = new Card(Suite.Clubs, Value.Jack);
+            card5 = new Card(Suite.Spides, Value.ten);
+            card6 = new Card(Suite.Clubs, Value.Queen);
+            card7 = new Card(Suite.Clubs, Value.King);
+            testList = new List<Card> { card1, card2, card3, card4, card5, card6, card7 };
+
+            Evaluation.Evaluate(testList);
+            Assert.Greater(Evaluation.HandEvaluation, 4);
+            Assert.Less(Evaluation.HandEvaluation, 5);
+
+            card1 = new Card(Suite.Clubs, Value.nine);
+            card2 = new Card(Suite.Hearts, Value.Queen);
+            card3 = new Card(Suite.Diamonds, Value.Queen);
+            card4 = new Card(Suite.Clubs, Value.Jack);
+            card5 = new Card(Suite.Spides, Value.ten);
+            testList = new List<Card> { card1, card2, card3, card4, card5 };
+
+            Evaluation.Evaluate(testList);
+            Assert.Greater(Evaluation.HandEvaluation, 1);
+            Assert.Less(Evaluation.HandEvaluation, 2);
+
+            //Baby straight
+            card1 = new Card(Suite.Clubs, Value.Ace);
+            card2 = new Card(Suite.Hearts, Value.two);
+            card3 = new Card(Suite.Diamonds, Value.Queen);
+            card4 = new Card(Suite.Clubs, Value.three);
+            card5 = new Card(Suite.Spides, Value.ten);
+            card6 = new Card(Suite.Clubs, Value.four);
+            card7 = new Card(Suite.Clubs, Value.five);
+            testList = new List<Card> { card1, card2, card3, card4, card5, card6, card7 };
 
             Evaluation.Evaluate(testList);
             Assert.Greater(Evaluation.HandEvaluation, 4);
