@@ -396,6 +396,39 @@ namespace PokerHandsTest
 
         }
 
+        [Test]
+        public void TwoHighCardHandsTest()
+        {
+            Evaluation Evaluation = new Poker.Evaluation();
+
+            var card1 = new Card(Suite.Clubs, Value.Ace);
+            var card2 = new Card(Suite.Spides, Value.two);
+            var card3 = new Card(Suite.Clubs, Value.three);
+            var card4 = new Card(Suite.Spides, Value.five);
+            var card5 = new Card(Suite.Clubs, Value.six);
+            var card6 = new Card(Suite.Clubs, Value.seven);
+            var card7 = new Card(Suite.Spides, Value.eight);
+            List<Card> testList = new List<Card> { card1, card2, card3, card4, card5, card6, card7 };
+
+            Evaluation.Evaluate(testList);
+            double hand1 = Evaluation.HandEvaluation;
+
+            card1 = new Card(Suite.Clubs, Value.seven);
+            card2 = new Card(Suite.Spides, Value.eight);
+            card3 = new Card(Suite.Clubs, Value.ten);
+            card4 = new Card(Suite.Spides, Value.five);
+            card5 = new Card(Suite.Clubs, Value.Jack);
+            card6 = new Card(Suite.Clubs, Value.Queen);
+            card7 = new Card(Suite.Spides, Value.King);
+
+            testList = new List<Card> { card1, card2, card3, card4, card5, card6, card7 };
+
+            Evaluation.Evaluate(testList);
+            double hand2 = Evaluation.HandEvaluation;
+            Assert.Greater(hand1, hand2);
+
+        }
+
 
     }
 }
